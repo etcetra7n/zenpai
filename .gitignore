@@ -3,6 +3,5 @@
 __pycache__/
 *.txt
 *.pdf
-*.png
-*.jpg
-*.jpeg
+./*.png
+./*.jpg
