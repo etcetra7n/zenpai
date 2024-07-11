@@ -13,7 +13,7 @@ from PySide6.QtWidgets import (
     QPushButton,
 )
 from sys import argv
-from knearch import run_knearch
+from zenpai import run_zenpai
 from time import sleep
 
 class CustomTitleBar(QWidget):
@@ -115,7 +115,7 @@ class MainWindow(QMainWindow):
     def __init__(self, selected_files):
         super().__init__()
         self.selected_files = selected_files
-        self.setWindowTitle("Knearch Utils AI")
+        self.setWindowTitle("Zenpai Utils AI")
         self.setMinimumSize(QSize(630, 420))
         self.setWindowFlags(Qt.WindowType.FramelessWindowHint)
         self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground)
@@ -130,7 +130,7 @@ class MainWindow(QMainWindow):
 
         work_space_layout = QVBoxLayout()
         work_space_layout.setContentsMargins(11, 11, 11, 11)
-        color_title = QLabel("Knearch Utils AI", self)
+        color_title = QLabel("Zenpai Utils AI", self)
         color_title.setAlignment(Qt.AlignmentFlag.AlignCenter)
         color_title.setStyleSheet(
             '''QLabel {
@@ -325,7 +325,7 @@ class MainWindow(QMainWindow):
         self.status_running.setVisible(True)
         self.status_running.repaint()
         try:
-            run_knearch(instruction, self.selected_files)
+            run_zenpai(instruction, self.selected_files)
         except:
             self.status_running.setVisible(False)
             self.status_failure.setVisible(True)

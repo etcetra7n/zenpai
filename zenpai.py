@@ -30,7 +30,7 @@ def install_required_packages(code):
         if not(package_exists(pkg)):
             check_call([executable, "-m", "pip", "install", pkg])
 
-def run_knearch(instruction, selected_files):
+def run_zenpai(instruction, selected_files):
     client = Groq()
     file_path = ''
     if len(selected_files) > 1:
@@ -111,6 +111,6 @@ if __name__ == '__main__':
         args.pop(pos)
         selected_files = args
         print('Selected files: '+ str(selected_files))
-        run_knearch(instruction, selected_files)
+        run_zenpai(instruction, selected_files)
     else:
-        print("Please use knearch -c {instruction} {files} format")
+        print("Please use zenpai -c {instruction} {files} format")
