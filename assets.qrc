@@ -1,0 +1,13 @@
+<!DOCTYPE RCC>
+<RCC version="1.0">
+<qresource>
+    <file alias="close.svg">assets/close.svg</file>
+    <file alias="max.svg">assets/max.svg</file>
+    <file alias="min.svg">assets/min.svg</file>
+    <file alias="normal.svg">assets/normal.svg</file>
+    <file alias="send.svg">assets/send.svg</file>
+    <file alias="loading.gif">assets/loading.gif</file>
+    <file alias="success.png">assets/success.png</file>
+    <file alias="failure.png">assets/failure.png</file>
+</qresource>
+</RCC>

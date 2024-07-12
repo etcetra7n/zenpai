@@ -1,7 +1,10 @@
 # Local Netlify folder
 .netlify
 __pycache__/
+build/
+dist/
 *.txt
 *.pdf
 ./*.png
 ./*.jpg
+assets.py
