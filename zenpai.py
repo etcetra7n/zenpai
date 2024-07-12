@@ -1,11 +1,10 @@
-from PySide6.QtCore import QSize, Qt, QEvent, QTimer
-from PySide6.QtGui import QPalette, QIcon, QCursor, QMovie, QFont
+from PySide6.QtCore import QSize, Qt, QEvent
+from PySide6.QtGui import QIcon, QCursor
 from PySide6.QtWidgets import (
     QApplication,
     QHBoxLayout,
     QLabel,
     QMainWindow,
-    QStyle,
     QToolButton,
     QVBoxLayout,
     QWidget,
@@ -14,14 +13,12 @@ from PySide6.QtWidgets import (
 )
 from sys import argv
 from czenpai import run_zenpai
-from time import sleep
 import assets
 
 class CustomTitleBar(QWidget):
     def __init__(self, parent):
         super().__init__(parent)
         # self.setAutoFillBackground(True) # <-- remove
-        # self.setBackgroundRole(QPalette.ColorRole.Highlight) # <-- remove
         self.initial_pos = None
         title_bar_layout = QHBoxLayout(self)
         title_bar_layout.setContentsMargins(1, 1, 1, 1)
@@ -221,6 +218,7 @@ class MainWindow(QMainWindow):
 
                }
             ''')
+        #22272E;
         #work_space_layout.addWidget(input_field)
         btn_row = QWidget()
         btn_row.setFixedSize(QSize(630, 78))
@@ -359,6 +357,6 @@ class MainWindow(QMainWindow):
         event.accept()
 
 app = QApplication(argv)
-window = MainWindow(['ff.txt'])
+window = MainWindow(argv)
 window.show()
 app.exec()

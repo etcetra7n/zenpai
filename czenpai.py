@@ -1,8 +1,7 @@
-from sys import argv, modules, executable
+from sys import argv, executable
 from groq import Groq
 from re import escape, search
 from subprocess import check_call
-from importlib.util import find_spec
 import pdfkit
 
 def package_exists(name):
@@ -103,14 +102,21 @@ def run_zenpai(instruction, selected_files):
         operation(selected_files[0])
 
 if __name__ == '__main__':
-    if '-c' in argv:
-        args = argv[1:]
-        pos = args.index('-c')
-        instruction = escape(args[pos+1])
-        args.pop(pos+1)
-        args.pop(pos)
-        selected_files = args
-        print('Selected files: '+ str(selected_files))
-        run_zenpai(instruction, selected_files)
+    if len(argv)>=3:
+        instruction = argv[1]
+        selected_files = argv[2:]
+        print('Instruction: '+ instruction)
+        print('Selected files: '+ str(selected_files)[1:-1])
+        print('Running...')
+        try:
+            run_zenpai(instruction, selected_files)
+            print("Success")
+        except:
+            print("Failure")
     else:
-        print("Please use zenpai -c {instruction} {files} format")
+        print("""error: Minimum two arguments expected
+
+Usage:
+czenpai [instruction] [file_1] [file_2] [file_3]...
+            """)
+        
