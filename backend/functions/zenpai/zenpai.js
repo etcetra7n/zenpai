@@ -3,24 +3,25 @@
 import { getFirestore, collection, doc, where, setDoc, query, getDocs, onSnapshot } from 'firebase/firestore'
 import { getStorage, ref, getDownloadURL } from "firebase/storage";*/
 
-const firebase = require('firebase/app');
-require('firebase/firestore');
-require("firebase/auth");
+const firebase = require("firebase/app");
+const firestore = require("firebase/firestore");
+
+//require("firebase/auth");
 const Groq = require('groq-sdk');
 
-/*
+// TODO: Replace the following with your app's Firebase project configuration
+// See: https://support.google.com/firebase/answer/7015592
 const firebaseConfig = {
-  apiKey: "AIzaSyAyEOxu3Zija0OzkqbiB8wbOsIGgXPq1sU",
-  authDomain: "happyadoptorg.firebaseapp.com",
-  projectId: "happyadoptorg",
-  storageBucket: "happyadoptorg.appspot.com",
-  messagingSenderId: "397514172189",
-  appId: "1:397514172189:web:c4f40e7af324b406fba3f4",
-  measurementId: "G-LZ8DKTVP4N"
-};*/
+  apiKey: "AIzaSyCQEh9RtXWiQtY0Y2nTkDPuxbYEJhKTkW8",
+  authDomain: "zenpai.firebaseapp.com",
+  projectId: "zenpai",
+  storageBucket: "zenpai.appspot.com",
+  messagingSenderId: "393234421305",
+  appId: "1:393234421305:web:cfa99cb18f11218043dfe8",
+  measurementId: "G-FH52BJJ207"
+};
+const app = firebase.initializeApp(firebaseConfig);
 
-//const app = firebase.initializeApp(firebaseConfig);
-//const db = firebase.firestore(app);
 /*
 async function searchDatabase(params) {
     try{
@@ -43,7 +44,20 @@ async function searchDatabase(params) {
 }
 */
 
-async function generate_script(instruction, file_num) {
+async function logInstruction(instruction, file_num) {
+    try{
+        const db = firestore.getFirestore(app);
+        await firestore.addDoc(firestore.collection(db, "instruct_log"), {
+          instruction: instruction,
+          fileNum: file_num,
+          timestamp: firestore.serverTimestamp(),
+        });
+    } catch (error) {
+        throw error;
+    }
+}
+
+async function generateScript(instruction, file_num) {
     const groq = new Groq();
     let prompt = "";
     if (file_num == 1) {
@@ -83,9 +97,9 @@ exports.handler = async (event, context) => {
       body: 'Method Not Allowed',
     };
   }
-
   const data = JSON.parse(event.body);
-  const script = await generate_script(data.instruction, data.file_num)
+  logInstruction(data.instruction, data.file_num);
+  const script = await generateScript(data.instruction, data.file_num)
   return {
     statusCode: 200,
     body: JSON.stringify({ "py_script": script }),
