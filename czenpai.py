@@ -1,8 +1,8 @@
 from sys import argv, executable
-from groq import Groq
 from re import escape, search
 from subprocess import check_call
 import pdfkit
+from requests import post
 
 def package_exists(name):
     try:
@@ -30,6 +30,7 @@ def install_required_packages(code):
             check_call([executable, "-m", "pip", "install", pkg])
 
 def run_zenpai(instruction, selected_files):
+    """
     client = Groq()
     file_path = ''
     if len(selected_files) > 1:
@@ -68,6 +69,16 @@ def run_zenpai(instruction, selected_files):
         install_required_packages(code)
         exec(code, globals())
         operation(selected_files[0])
+        """
+        response = post('https://zenpai.netlify.app/.netlify/functions/zenpai', 
+            data={"file_num": "1"
+                  "instruction": "trim trailing space"
+            },
+            headers={"Content-Type": "application/json"},
+        )
+
+        print(response.json())
+        """
     except:
         completion = client.chat.completions.create(
             model="llama3-70b-8192",
@@ -100,6 +111,7 @@ def run_zenpai(instruction, selected_files):
         install_required_packages(code)
         exec(code, globals())
         operation(selected_files[0])
+        """
 
 if __name__ == '__main__':
     if len(argv)>=3:
