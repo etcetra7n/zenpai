@@ -40,7 +40,6 @@ def generate_script(instruction, selected_files):
     except:
         raise
     if response.status_code == 200:
-        print(response.text)
         script = response.json()['py_script'].split("```")[1]
         if script.startswith('python'):
             script = script[7:]
@@ -55,6 +54,7 @@ def generate_script(instruction, selected_files):
             exec(script, globals())
             operation(selected_files)
     else:
+        print(response.text)
         raise RuntimeError
 
 if __name__ == '__main__':

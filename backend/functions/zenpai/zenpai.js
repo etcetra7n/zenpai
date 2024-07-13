@@ -50,7 +50,7 @@ async function logInstruction(instruction, file_num, script) {
         await firestore.addDoc(firestore.collection(db, "instruct_log"), {
           instruction: instruction,
           fileNum: file_num,
-          result: script,
+          result: await script,
           timestamp: firestore.serverTimestamp(),
         });
     } catch (error) {
