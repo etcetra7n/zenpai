@@ -41,10 +41,7 @@ def generate_script(instruction, selected_files):
         raise
     if response.status_code == 200:
         script = response.json()['py_script']
-        if script.startswith('python'):
-            script = script[7:]
-        if script.startswith('Python'):
-            script = script[7:]
+        print(script)
         install_required_packages(script)
         if len(selected_files) == 1:
             exec(script, globals())
