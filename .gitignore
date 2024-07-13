@@ -8,3 +8,4 @@ dist/
 ./*.png
 ./*.jpg
 assets.py
+node_modules/

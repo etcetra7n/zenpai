@@ -3,9 +3,9 @@
 import { getFirestore, collection, doc, where, setDoc, query, getDocs, onSnapshot } from 'firebase/firestore'
 import { getStorage, ref, getDownloadURL } from "firebase/storage";*/
 
-const fbApp = require('firebase/app');
-const fbFirestore = require('firebase/firestore');
-const fbStorage = require('firebase/storage');
+const firebase = require('firebase/app');
+require('firebase/firestore');
+require("firebase/auth");
 
 const firebaseConfig = {
   apiKey: "AIzaSyAyEOxu3Zija0OzkqbiB8wbOsIGgXPq1sU",
@@ -17,21 +17,9 @@ const firebaseConfig = {
   measurementId: "G-LZ8DKTVP4N"
 };
 
-const app = fbApp.initializeApp(firebaseConfig);
-const db = fbFirestore.getFirestore(app);
-
-function getQueryParams(params) {
-    const queryParams = {};
-    for (const [key, value] of Object.entries(params)) {
-        if(value == "Any"){
-            continue;
-        }
-        else{
-            queryParams[key] = value;
-        }
-    }
-    return queryParams;
-}
+const app = firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore(app);
+/*
 async function searchDatabase(params) {
     try{
         let q = fbFirestore.collection(db, "listing");
@@ -51,31 +39,22 @@ async function searchDatabase(params) {
         throw error;
     }
 }
+*/
+exports.handler = async (event, context) => {
+  if (event.httpMethod !== 'POST') {
+    return {
+      statusCode: 405,
+      body: 'Method Not Allowed',
+    };
+  }
 
-const handler = async (event) => {
-  // Apply CORS headers
-    const queryParams = getQueryParams(event.queryStringParameters);
-    const data = await searchDatabase(queryParams);
-    if (data.length == 0){
-        const response = {
-            statusCode: 404,
-            headers: {
-                'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Headers': 'Content-Type',
-            },
-            body: JSON.stringify({"error": "404"}),
-        };
-        return response;
-    } else {
-        const response = {
-            statusCode: 200,
-            headers: {
-                'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Headers': 'Content-Type',
-            },
-            body: JSON.stringify(data),
-        };
-        return response;
-    }
-}
-module.exports = { handler }
+  const data = JSON.parse(event.body);
+
+  // Process the data
+  console.log(data);
+
+  return {
+    statusCode: 200,
+    body: JSON.stringify({ message: 'Data received successfully' }),
+  };
+};

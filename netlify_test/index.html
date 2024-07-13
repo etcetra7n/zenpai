@@ -1,0 +1,30 @@
+<html>
+<head>
+
+</head>
+<body>
+    <button onlick="pressed"> Press </button>
+    <script>
+        function onclick(){
+            event.preventDefault();
+            try {
+              const response = await fetch('/.netlify/functions/zenpai', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: {
+                    'dd': 'ghgg',
+                    'gg': 'trtrt'
+                }
+              });
+
+              const result = await response.json();
+              console.log(result);
+            } catch (error) {
+              console.error('Error:', error);
+            }
+          };
+    </script>
+</body>
+</html>
