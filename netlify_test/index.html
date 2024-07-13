@@ -5,10 +5,9 @@
 <body>
     <button onlick="pressed"> Press </button>
     <script>
-        function onclick(){
-            event.preventDefault();
+        async function onclick(){
             try {
-              const response = await fetch('/.netlify/functions/zenpai', {
+              const response = await fetch('https://zenpai.netlify.app/.netlify/functions/zenpai', {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
