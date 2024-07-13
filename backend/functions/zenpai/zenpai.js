@@ -44,13 +44,12 @@ async function searchDatabase(params) {
 }
 */
 
-async function logInstruction(instruction, file_num, script) {
+async function logInstruction(instruction, file_num) {
     try{
         const db = firestore.getFirestore(app);
         await firestore.addDoc(firestore.collection(db, "instruct_log"), {
           instruction: instruction,
           fileNum: file_num,
-          result: script,
           timestamp: firestore.serverTimestamp(),
         });
     } catch (error) {
@@ -101,7 +100,7 @@ exports.handler = async (event, context) => {
   const data = JSON.parse(event.body);
   logInstruction(data.instruction, data.file_num);
   const script = await generateScript(data.instruction, data.file_num)
-  logInstruction(data.instruction, data.file_num, await script);
+  logInstruction(data.instruction, data.file_num);
   return {
     statusCode: 200,
     body: JSON.stringify({ "py_script": script }),
