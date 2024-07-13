@@ -1,4 +1,4 @@
-from PySide6.QtCore import QSize, Qt, QEvent
+from PySide6.QtCore import QSize, Qt, QEvent, QRunnable, Slot, QThreadPool
 from PySide6.QtGui import QIcon, QCursor
 from PySide6.QtWidgets import (
     QApplication,
@@ -12,7 +12,7 @@ from PySide6.QtWidgets import (
     QPushButton,
 )
 from sys import argv
-from czenpai import run_zenpai
+from czenpai import generate_script
 from os import path as os_path
 
 basedir = os_path.dirname(__file__)
@@ -23,6 +23,26 @@ try:
     windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
 except ImportError:
     pass
+
+class Worker(QRunnable):
+    def __init__(self, instruction, selected_files, running_stat, success_stat, failure_stat):
+        super(Worker, self).__init__()
+        self.instruction = instruction
+        self.selected_files = selected_files
+        self.running_stat = running_stat
+        self.success_stat = success_stat
+        self.failure_stat = failure_stat
+    @Slot()  # QtCore.Slot
+    def run(self):
+        try:
+            generate_script(self.instruction, self.selected_files)
+        except:
+            self.running_stat.setVisible(False)
+            self.failure_stat.setVisible(True)
+            raise
+        else:
+            self.running_stat.setVisible(False)
+            self.success_stat.setVisible(True)
 
 class CustomTitleBar(QWidget):
     def __init__(self, parent):
@@ -325,6 +345,7 @@ class MainWindow(QMainWindow):
 
         central_widget.setLayout(centra_widget_layout)
         self.setCentralWidget(central_widget)
+        self.threadpool = QThreadPool()
 
     def run_btn_clicked(self):
         instruction = self.input_field.toPlainText()
@@ -332,25 +353,26 @@ class MainWindow(QMainWindow):
         self.status_success.setVisible(False)
         self.status_running.setVisible(True)
         self.status_running.repaint()
-        try:
-            run_zenpai(instruction, self.selected_files)
-        except:
-            self.status_running.setVisible(False)
-            self.status_failure.setVisible(True)
-        else:
-            self.status_running.setVisible(False)
-            self.status_success.setVisible(True)
+
+        worker = Worker(instruction, self.selected_files, self.status_running, self.status_success, self.status_failure)
+        self.threadpool.start(worker)
+
+    def keyPressEvent(self, event):
+        if event.key() == Qt.Key_Enter:
+            self.run_btn_clicked()
 
     def changeEvent(self, event):
         if event.type() == QEvent.Type.WindowStateChange:
             self.title_bar.window_state_changed(self.windowState())
         super().changeEvent(event)
         event.accept()
+
     def mousePressEvent(self, event):
         if event.button() == Qt.MouseButton.LeftButton:
             self.initial_pos = event.position().toPoint()
         super().mousePressEvent(event)
         event.accept()
+
     def mouseMoveEvent(self, event):
         if self.initial_pos is not None:
             delta = event.position().toPoint() - self.initial_pos
@@ -360,15 +382,16 @@ class MainWindow(QMainWindow):
             )
         super().mouseMoveEvent(event)
         event.accept()
+
     def mouseReleaseEvent(self, event):
         self.initial_pos = None
         super().mouseReleaseEvent(event)
         event.accept()
 
-app = QApplication(argv)
-if len(argv)>=1:
+if len(argv)>=2:
+    app = QApplication(argv)
     window = MainWindow(argv[1:])
+    window.show()
+    app.exec()
 else:
     print("No files given")
-window.show()
-app.exec()

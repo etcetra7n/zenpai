@@ -29,30 +29,34 @@ def install_required_packages(code):
         if not(package_exists(pkg)):
             check_call([executable, "-m", "pip", "install", pkg])
 
-def run_zenpai(instruction, selected_files):
+def generate_script(instruction, selected_files):
     try:
         #https://zenpai.netlify.app/.netlify/functions/zenpai
         response = post('https://zenpai.netlify.app/.netlify/functions/zenpai', 
-            json={"file_num": "1",
-                  "instruction": "trim trailing space"
+            json={"file_num": len(selected_files),
+                  "instruction": instruction
             },
         )
-        if response.status_code == 200:
-            script = response.json()['py_script'].split("```")[1]
-            if script.startswith('python'):
-                script = script[7:]
-            if script.startswith('Python'):
-                script = script[7:]
-            #print(script)
-            install_required_packages(script)
-            if len(selected_files) == 1:
-                exec(script, globals())
-                operation(selected_files[0])
-            else:
-                exec(script, globals())
-                operation(selected_files)
     except:
         raise
+    if response.status_code == 200:
+        print(response.text)
+        script = response.json()['py_script'].split("```")[1]
+        if script.startswith('python'):
+            script = script[7:]
+        if script.startswith('Python'):
+            script = script[7:]
+        print(script)
+        install_required_packages(script)
+        if len(selected_files) == 1:
+            exec(script, globals())
+            operation(selected_files[0])
+        else:
+            exec(script, globals())
+            operation(selected_files)
+    else:
+        print(response.text)
+        raise RuntimeError
 
 if __name__ == '__main__':
     if len(argv)>=3:
@@ -62,7 +66,7 @@ if __name__ == '__main__':
         print('Selected files: '+ str(selected_files)[1:-1])
         print('Running...')
         try:
-            run_zenpai(instruction, selected_files)
+            generate_script(instruction, selected_files)
             print("Success")
         except:
             print("Failure")
