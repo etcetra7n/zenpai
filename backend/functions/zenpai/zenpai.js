@@ -50,7 +50,7 @@ async function logInstruction(instruction, file_num, script) {
         await firestore.addDoc(firestore.collection(db, "instruct_log"), {
           instruction: instruction,
           fileNum: file_num,
-          result: await script,
+          result: script,
           timestamp: firestore.serverTimestamp(),
         });
     } catch (error) {
@@ -101,7 +101,7 @@ exports.handler = async (event, context) => {
   const data = JSON.parse(event.body);
   logInstruction(data.instruction, data.file_num);
   const script = await generateScript(data.instruction, data.file_num)
-  logInstruction(data.instruction, data.file_num, script);
+  logInstruction(data.instruction, data.file_num, await script);
   return {
     statusCode: 200,
     body: JSON.stringify({ "py_script": script }),
