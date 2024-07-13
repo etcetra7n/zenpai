@@ -32,7 +32,7 @@ def install_required_packages(code):
 def run_zenpai(instruction, selected_files):
     try:
         #https://zenpai.netlify.app/.netlify/functions/zenpai
-        response = post('http://localhost:8888/.netlify/functions/zenpai', 
+        response = post('https://zenpai.netlify.app/.netlify/functions/zenpai', 
             json={"file_num": "1",
                   "instruction": "trim trailing space"
             },

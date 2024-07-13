@@ -13,7 +13,16 @@ from PySide6.QtWidgets import (
 )
 from sys import argv
 from czenpai import run_zenpai
-import assets
+from os import path as os_path
+
+basedir = os_path.dirname(__file__)
+
+try:
+    from ctypes import windll  # Only exists on Windows.
+    myappid = 'pro.zenpai.1'
+    windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
+except ImportError:
+    pass
 
 class CustomTitleBar(QWidget):
     def __init__(self, parent):
@@ -43,14 +52,14 @@ class CustomTitleBar(QWidget):
 
         # Min button
         self.min_button = QToolButton(self)
-        min_icon = QIcon(":/min.svg")
+        min_icon = QIcon(os_path.join(basedir, "assets", "min.svg"))
         #min_icon.addFile()
         self.min_button.setIcon(min_icon)
         self.min_button.clicked.connect(self.window().showMinimized)
 
         # Max button
         self.max_button = QToolButton(self)
-        max_icon = QIcon(":/max.svg")
+        max_icon = QIcon(os_path.join(basedir, "assets", "max.svg"))
         #max_icon.addFile()
         self.max_button.setIcon(max_icon)
         self.max_button.clicked.connect(self.window().showMaximized)
@@ -58,14 +67,14 @@ class CustomTitleBar(QWidget):
         # Close button
         self.close_button = QToolButton(self)
         close_icon = QIcon()
-        close_icon.addFile(":/close.svg") # Close has only a single state.
+        close_icon.addFile(os_path.join(basedir, "assets", "close.svg")) # Close has only a single state.
         self.close_button.setIcon(close_icon)
         self.close_button.clicked.connect(self.window().close)
 
         # Normal button
         self.normal_button = QToolButton(self)
         normal_icon = QIcon()
-        normal_icon.addFile(":/normal.svg")
+        normal_icon.addFile(os_path.join(basedir, "assets", "normal.svg"))
         self.normal_button.setIcon(normal_icon)
         self.normal_button.clicked.connect(self.window().showNormal)
         self.normal_button.setVisible(False)
@@ -241,7 +250,7 @@ class MainWindow(QMainWindow):
                }
             ''')
         loading_icon = QIcon()
-        loading_icon.addFile(":/loading.gif")
+        loading_icon.addFile(os_path.join(basedir, "assets", "loading.gif"))
         self.status_running.setIcon(loading_icon)
         self.status_running.setVisible(False)
 
@@ -256,7 +265,7 @@ class MainWindow(QMainWindow):
                }
             ''')
         success_icon = QIcon()
-        success_icon.addFile(":/success.png")
+        success_icon.addFile(os_path.join(basedir, "assets", "success.png"))
 
         self.status_success.setIcon(success_icon)
         self.status_success.setVisible(False)
@@ -272,7 +281,7 @@ class MainWindow(QMainWindow):
                }
             ''')
         failure_icon = QIcon()
-        failure_icon.addFile(":/failure.png")
+        failure_icon.addFile(os_path.join(basedir, "assets", "failure.png"))
 
         self.status_failure.setIcon(failure_icon)
         self.status_failure.setVisible(False)
@@ -282,7 +291,7 @@ class MainWindow(QMainWindow):
         run_btn.setCursor(QCursor(Qt.PointingHandCursor))
 
         send_icon = QIcon()
-        send_icon.addFile(":/send.svg")
+        send_icon.addFile(os_path.join(basedir, "assets", "send.svg"))
         run_btn.setIcon(send_icon)
 
         run_btn.clicked.connect(self.run_btn_clicked)
@@ -357,6 +366,9 @@ class MainWindow(QMainWindow):
         event.accept()
 
 app = QApplication(argv)
-window = MainWindow(argv)
+if len(argv)>=1:
+    window = MainWindow(argv[1:])
+else:
+    print("No files given")
 window.show()
 app.exec()
