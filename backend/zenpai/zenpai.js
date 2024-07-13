@@ -48,7 +48,7 @@ exports.handler = async (event, context) => {
     };
   }
 
-  const data = JSON.parse(event.body);
+  const data = event.body;
 
   // Process the data
   console.log(data);
