@@ -40,7 +40,7 @@ def generate_script(instruction, selected_files):
     except:
         raise
     if response.status_code == 200:
-        script = response.json()['py_script'].split("```")[1]
+        script = response.json()['py_script']
         if script.startswith('python'):
             script = script[7:]
         if script.startswith('Python'):

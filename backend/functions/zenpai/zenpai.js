@@ -99,7 +99,11 @@ exports.handler = async (event, context) => {
     };
   }
   const data = JSON.parse(event.body);
-  const script = await generateScript(data.instruction, data.file_num)
+  let result = await generateScript(data.instruction, data.file_num);
+  let script = result.split("```")[1];
+  if (result.startsWith('python') || result.startswith('Python')){
+    script = script.substring(7)
+  }
   await logInstruction(data.instruction, data.file_num, script);
   return {
     statusCode: 200,
