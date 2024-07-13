@@ -360,6 +360,8 @@ class MainWindow(QMainWindow):
     def keyPressEvent(self, event):
         if event.key() == Qt.Key_Enter:
             self.run_btn_clicked()
+        if event.key() == Qt.Key_Return:
+            self.run_btn_clicked()
 
     def changeEvent(self, event):
         if event.type() == QEvent.Type.WindowStateChange:

@@ -2,10 +2,10 @@
 
 
 a = Analysis(
-    ['src\\zenpai.py'],
+    ['src\\czenpai.py'],
     pathex=[],
     binaries=[],
-    datas=[('src/assets/*', 'assets')],
+    datas=[],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},
@@ -21,12 +21,12 @@ exe = EXE(
     a.scripts,
     [],
     exclude_binaries=True,
-    name='zenpai',
+    name='czenpai',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
     upx=False,
-    console=False,
+    console=True,
     disable_windowed_traceback=False,
     argv_emulation=False,
     target_arch=None,
@@ -40,5 +40,5 @@ coll = COLLECT(
     strip=False,
     upx=False,
     upx_exclude=[],
-    name='zenpai',
+    name='czenpai',
 )

@@ -55,7 +55,6 @@ def generate_script(instruction, selected_files):
             exec(script, globals())
             operation(selected_files)
     else:
-        print(response.text)
         raise RuntimeError
 
 if __name__ == '__main__':
