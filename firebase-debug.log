@@ -1,0 +1,43 @@
+[debug] [2024-07-14T06:21:36.177Z] ----------------------------------------------------------------------
+[debug] [2024-07-14T06:21:36.182Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Admin\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js serve
+[debug] [2024-07-14T06:21:36.183Z] CLI Version:   13.13.0
+[debug] [2024-07-14T06:21:36.183Z] Platform:      win32
+[debug] [2024-07-14T06:21:36.183Z] Node Version:  v20.15.0
+[debug] [2024-07-14T06:21:36.184Z] Time:          Sun Jul 14 2024 11:51:36 GMT+0530 (India Standard Time)
+[debug] [2024-07-14T06:21:36.184Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2024-07-14T06:21:36.363Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2024-07-14T06:21:36.364Z] > authorizing via signed-in user (greeknio@gmail.com)
+[debug] [2024-07-14T06:21:36.364Z] [iam] checking project zenpai for permissions ["firebase.projects.get"]
+[debug] [2024-07-14T06:21:36.366Z] > refreshing access token with scopes: []
+[debug] [2024-07-14T06:21:36.368Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2024-07-14T06:21:36.369Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2024-07-14T06:21:36.560Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2024-07-14T06:21:36.561Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2024-07-14T06:21:36.575Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/zenpai:testIamPermissions [none]
+[debug] [2024-07-14T06:21:36.576Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/zenpai:testIamPermissions x-goog-quota-user=projects/zenpai
+[debug] [2024-07-14T06:21:36.576Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/zenpai:testIamPermissions {"permissions":["firebase.projects.get"]}
+[debug] [2024-07-14T06:21:37.854Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/zenpai:testIamPermissions 200
+[debug] [2024-07-14T06:21:37.854Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/zenpai:testIamPermissions {"permissions":["firebase.projects.get"]}
+[debug] [2024-07-14T06:21:37.856Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/zenpai [none]
+[debug] [2024-07-14T06:21:38.309Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/zenpai 200
+[debug] [2024-07-14T06:21:38.310Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/zenpai {"projectId":"zenpai","projectNumber":"393234421305","displayName":"zenpai","name":"projects/zenpai","resources":{"hostingSite":"zenpai"},"state":"ACTIVE","etag":"1_d77074c9-2b33-49bf-8b4c-63f02b449aee"}
+[info] 
+[info] === Serving from 'D:\zenpai'...
+[info] 
+[debug] [2024-07-14T06:21:38.318Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/zenpai/sites 
+[debug] [2024-07-14T06:21:39.320Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/zenpai/sites 200
+[debug] [2024-07-14T06:21:39.321Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/zenpai/sites {"sites":[{"name":"projects/zenpai/sites/zenpai","defaultUrl":"https://zenpai.web.app","appId":"1:393234421305:web:cfa99cb18f11218043dfe8","type":"DEFAULT_SITE"}]}
+[debug] [2024-07-14T06:21:39.321Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/zenpai/webApps/1:393234421305:web:cfa99cb18f11218043dfe8/config [none]
+[debug] [2024-07-14T06:21:40.109Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/zenpai/webApps/1:393234421305:web:cfa99cb18f11218043dfe8/config 200
+[debug] [2024-07-14T06:21:40.110Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/zenpai/webApps/1:393234421305:web:cfa99cb18f11218043dfe8/config {"projectId":"zenpai","appId":"1:393234421305:web:cfa99cb18f11218043dfe8","storageBucket":"zenpai.appspot.com","apiKey":"AIzaSyCQEh9RtXWiQtY0Y2nTkDPuxbYEJhKTkW8","authDomain":"zenpai.firebaseapp.com","messagingSenderId":"393234421305","measurementId":"G-FH52BJJ207"}
+[debug] [2024-07-14T06:21:40.117Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/zenpai [none]
+[debug] [2024-07-14T06:21:40.414Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/zenpai 200
+[debug] [2024-07-14T06:21:40.414Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/zenpai {"projectId":"zenpai","projectNumber":"393234421305","displayName":"zenpai","name":"projects/zenpai","resources":{"hostingSite":"zenpai"},"state":"ACTIVE","etag":"1_d77074c9-2b33-49bf-8b4c-63f02b449aee"}
+[info] i  hosting[zenpai]: Serving hosting files from: public {"metadata":{"emulator":{"name":"hosting"},"message":"Serving hosting files from: \u001b[1mpublic\u001b[22m"}}
+[info] +  hosting[zenpai]: Local server: http://localhost:5000 {"metadata":{"emulator":{"name":"hosting"},"message":"Local server: \u001b[4m\u001b[1mhttp://localhost:5000\u001b[22m\u001b[24m"}}
+[info] i  hosting: ::1 - - [14/Jul/2024:06:22:34 +0000] "GET /auth/ HTTP/1.1" 200 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36" {"metadata":{"emulator":{"name":"hosting"},"message":"::1 - - [14/Jul/2024:06:22:34 +0000] \"GET /auth/ HTTP/1.1\" 200 - \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36\""}}
+[info] i  hosting: ::1 - - [14/Jul/2024:06:22:34 +0000] "GET /_css/auth-page.css HTTP/1.1" 200 - "http://localhost:5000/auth/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36" {"metadata":{"emulator":{"name":"hosting"},"message":"::1 - - [14/Jul/2024:06:22:34 +0000] \"GET /_css/auth-page.css HTTP/1.1\" 200 - \"http://localhost:5000/auth/\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36\""}}
+[info] i  hosting: ::1 - - [14/Jul/2024:06:22:34 +0000] "GET /_js/auth.js HTTP/1.1" 200 - "http://localhost:5000/auth/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36" {"metadata":{"emulator":{"name":"hosting"},"message":"::1 - - [14/Jul/2024:06:22:34 +0000] \"GET /_js/auth.js HTTP/1.1\" 200 - \"http://localhost:5000/auth/\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36\""}}
+[info] i  hosting: ::1 - - [14/Jul/2024:06:27:17 +0000] "GET /auth/ HTTP/1.1" 200 - "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36" {"metadata":{"emulator":{"name":"hosting"},"message":"::1 - - [14/Jul/2024:06:27:17 +0000] \"GET /auth/ HTTP/1.1\" 200 - \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36\""}}
+[info] i  hosting: ::1 - - [14/Jul/2024:06:27:17 +0000] "GET /_js/auth.js HTTP/1.1" 200 - "http://localhost:5000/auth/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36" {"metadata":{"emulator":{"name":"hosting"},"message":"::1 - - [14/Jul/2024:06:27:17 +0000] \"GET /_js/auth.js HTTP/1.1\" 200 - \"http://localhost:5000/auth/\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36\""}}
