@@ -18,7 +18,8 @@ const googleSignInBtn = document.getElementById('googleSignInBtn');
 
 async function sendIdTokenToBackend(idToken) {
   //https://zenpai.netlify.app/.netlify/functions/processUserIdToken
-  fetch('http://localhost:8888/.netlify/functions/processUserIdToken', {
+  //localhost:8888/.netlify/functions/processUserIdToken
+  fetch('https://zenpai.netlify.app/.netlify/functions/processUserIdToken', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'

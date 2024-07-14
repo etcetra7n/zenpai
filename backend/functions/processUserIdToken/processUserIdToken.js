@@ -32,14 +32,20 @@ exports.handler = async (event, context) => {
     console.error('Error verifying ID token:', error);
     return {
       statusCode: 401,
-      headers: commonHeaders,
+      headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Headers': 'Content-Type',
+        },
       body: JSON.stringify({ message: "Invalid ID token" }),
     };
   }
   //await enterUserToDatabase(decodedToken);
   return {
     statusCode: 200,
-    headers: commonHeaders,
+    headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Headers': 'Content-Type',
+        },
     body: JSON.stringify({ message: "success" }),
   };
 };
