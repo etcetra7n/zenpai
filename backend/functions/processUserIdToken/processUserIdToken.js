@@ -12,13 +12,23 @@ async function enterUserToDatabase(userData){
 }
 
 exports.handler = async (event, context) => {
+  if (event.httpMethod == 'OPTIONS') {
+    return {
+      statusCode: 200,
+      headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Headers': 'Content-Type',
+          "Content-type": "application/json"
+        },
+      body: JSON.stringify({ message: "success" })
+    };
+  }
   console.log(event.body);
   const userIdToken = JSON.parse(event.body).userIdToken;
   const commonHeaders = {
     'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': 'POST',
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type'
-    /*'Access-Control-Max-Age': 259200, // 30 days*/
   };
   try {
     // Verify the ID token
@@ -35,6 +45,7 @@ exports.handler = async (event, context) => {
       headers: {
           'Access-Control-Allow-Origin': '*',
           'Access-Control-Allow-Headers': 'Content-Type',
+          "Content-type": "application/json"
         },
       body: JSON.stringify({ message: "Invalid ID token" }),
     };
@@ -45,6 +56,7 @@ exports.handler = async (event, context) => {
     headers: {
           'Access-Control-Allow-Origin': '*',
           'Access-Control-Allow-Headers': 'Content-Type',
+          "Content-type": "application/json"
         },
     body: JSON.stringify({ message: "success" }),
   };

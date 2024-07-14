@@ -19,21 +19,22 @@ const googleSignInBtn = document.getElementById('googleSignInBtn');
 async function sendIdTokenToBackend(idToken) {
   //https://zenpai.netlify.app/.netlify/functions/processUserIdToken
   //localhost:8888/.netlify/functions/processUserIdToken
-  try{
-    const response = await fetch('http://localhost:8888/.netlify/functions/processUserIdToken', {
+  fetch('http://localhost:8888/.netlify/functions/processUserIdToken', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     },
-    body: {
-        "userIdToken": idToken,
-    }
-  });
-   
-  console.log('Server response:', await response.json());
-  } catch(error) {
+    body: JSON.stringify({ 
+      "userIdToken": idToken,
+    })
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log('Server response:', data);
+  })
+  .catch(error => {
     console.error('Error sending ID token to backend:', error);
-  }
+  });
 }
 
 googleSignInBtn.addEventListener('click', async => {
