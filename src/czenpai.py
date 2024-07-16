@@ -32,7 +32,7 @@ def install_required_packages(code):
 def generate_script(instruction, selected_files):
     try:
         #https://zenpai.netlify.app/.netlify/functions/zenpai
-        response = post('https://zenpai.netlify.app/.netlify/functions/zenpai', 
+        response = post('https://zenpai.netlify.app/.netlify/functions/generateScript', 
             json={"file_num": len(selected_files),
                   "instruction": instruction
             },
