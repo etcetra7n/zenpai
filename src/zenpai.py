@@ -17,6 +17,7 @@ from czenpai import generate_script
 from os import path as os_path
 from pathlib import Path
 from subprocess import check_call
+from auth import zenpai_auth
 
 basedir = os_path.dirname(__file__)
 
@@ -302,9 +303,8 @@ class MainWindow(QMainWindow):
 if __name__ == '__main__':
     auth_file = Path(os_path.join(basedir, ".auth_details"))
     if not (auth_file.is_file()):
-        print("auth file not found")
-        zenpai_auth = os_path.join(basedir, "zenpai-auth")
-        check_call([zenpai_auth])
+        print("You are not signed in.")
+        zenpai_auth()
     else:
         if len(argv)>=2:
             app = QApplication(argv)

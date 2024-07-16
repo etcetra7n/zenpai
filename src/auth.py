@@ -42,7 +42,7 @@ class Worker(QRunnable):
 
     @Slot()
     def run(self):
-        url = "http://localhost:8888/.netlify/functions/processTempId"
+        url = "https://zenpai/.netlify/functions/processTempId"
         data = {'temp_id': self.tempId}
         auth_email = ""
         try:
@@ -192,7 +192,7 @@ class AuthWindow(QMainWindow):
 
     def signInBtn_clicked(self, event):
         tempId = generate_temp_id()
-        web_open('http://localhost:5000/auth?tempId='+tempId)
+        web_open('https://zenpai.pro/auth?tempId='+tempId)
         worker = Worker(tempId)
         worker.signals.signin_success.connect(self.show_signin_success)
         self.threadpool.start(worker)
@@ -264,8 +264,11 @@ class AuthWindow(QMainWindow):
         #self.threadpool.started()
         event.accept() # let the window close
 
-if __name__ == '__main__':
+def zenpai_auth():
     app = QApplication(argv)
     window = AuthWindow()
     window.show()
     sys_exit(app.exec())
+    
+if __name__ == '__main__':
+    zenpai_auth()

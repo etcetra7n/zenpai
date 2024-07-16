@@ -3,6 +3,11 @@ from re import escape, search
 from subprocess import check_call
 #import pdfkit
 from requests import post
+from pathlib import Path
+from json import load as json_load
+from os import path as os_path
+
+basedir = os_path.dirname(__file__)
 
 def package_exists(name):
     try:
@@ -31,12 +36,18 @@ def install_required_packages(code):
 
 def generate_script(instruction, selected_files):
     try:
-        #https://zenpai.netlify.app/.netlify/functions/zenpai
-        response = post('https://zenpai.netlify.app/.netlify/functions/generateScript', 
-            json={"file_num": len(selected_files),
+        auth_file = Path(os_path.join(basedir, ".auth_details"))
+        if not (auth_file.is_file()):
+            print("You are not signed in.")
+            return(1)
+        request = {"file_num": len(selected_files),
                   "instruction": instruction
-            },
-        )
+            }
+        with open(auth_file, 'r') as f:
+            auth = json_load(f)
+            request['uid'] = auth['uid']
+        print(request)
+        response = post('https://zenpai.netlify.app/.netlify/functions/generateScript', json=request)
     except:
         raise
     if response.status_code == 200:
@@ -49,6 +60,7 @@ def generate_script(instruction, selected_files):
         else:
             exec(script, globals())
             operation(selected_files)
+        return(0)
     else:
         print(response.text)
         raise RuntimeError
