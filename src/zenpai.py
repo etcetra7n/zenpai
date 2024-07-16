@@ -180,7 +180,7 @@ class MainWindow(QMainWindow):
                }
             ''')
         loading_icon = QIcon()
-        loading_icon.addFile(os_path.join(basedir, "assets", "loading.gif"))
+        loading_icon.addFile(os_path.join(basedir, "assets", "loading.png"))
         self.status_running.setIcon(loading_icon)
         self.status_running.setVisible(False)
 
@@ -235,7 +235,7 @@ class MainWindow(QMainWindow):
                 margin-top:10px;
                 border-style: outset;
                 border-radius: 10px;
-                padding: 5px 13px 5px 18px;
+                padding: 6px 14px 8px 20px;
                }
                
                QPushButton:hover {
@@ -308,6 +308,7 @@ if __name__ == '__main__':
     else:
         if len(argv)>=2:
             app = QApplication(argv)
+            app.setWindowIcon(QIcon(os_path.join(basedir, "assets", "icon.ico")))
             window = MainWindow(argv[1:])
             window.show()
             app.exec()

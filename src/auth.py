@@ -25,6 +25,13 @@ from json import dump as json_dump
 basedir = os_path.dirname(__file__)
 signed_in = False
 
+try:
+    from ctypes import windll  # Only exists on Windows.
+    myappid = 'pro.zenpai.1'
+    windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
+except ImportError:
+    pass
+
 def generate_temp_id(n=20):
     characters = string.ascii_letters + string.digits
     key = ''.join(choice(characters) for _ in range(n))
@@ -266,6 +273,7 @@ class AuthWindow(QMainWindow):
 
 def zenpai_auth():
     app = QApplication(argv)
+    app.setWindowIcon(QIcon(os_path.join(basedir, "assets", "icon.ico")))
     window = AuthWindow()
     window.show()
     sys_exit(app.exec())

@@ -1,18 +1,6 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
+import { app, logEvent, analytics } from "/_js/common.js";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-auth.js";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyCQEh9RtXWiQtY0Y2nTkDPuxbYEJhKTkW8",
-  authDomain: "zenpai.firebaseapp.com",
-  projectId: "zenpai",
-  storageBucket: "zenpai.appspot.com",
-  messagingSenderId: "393234421305",
-  appId: "1:393234421305:web:cfa99cb18f11218043dfe8",
-  measurementId: "G-FH52BJJ207"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
 async function sendUserIdToBackend(userIdToken, tempId) {
@@ -33,6 +21,7 @@ async function sendUserIdToBackend(userIdToken, tempId) {
   return await response.json();
   } catch(error) {
     console.error('Error sending ID token to backend:', error);
+    logEvent(analytics, 'crash', { name: 'send_user_id_to_backend'});
   }
 }
 let googleSignInBtn = document.getElementById('google-sign-in-btn');
@@ -82,6 +71,7 @@ googleSignInBtn.addEventListener('click', async => {
       const errorMessage = error.message;
       //const credential = GoogleAuthProvider.credentialFromError(error);
       console.error('Error during sign-in: ', errorCode, errorMessage);
+      logEvent(analytics, 'crash', { name: 'auth_sign_in '});
       throw error;
     });
 });
