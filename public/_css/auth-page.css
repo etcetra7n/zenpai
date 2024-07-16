@@ -1,0 +1,83 @@
+body {
+    background-color: #22272E;
+}
+.roboto-regular {
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+#login-screen-container {
+    width: 100%;
+    height: 500px;
+    text-align: center;
+}
+#main-title {
+    margin-top: 160px;
+}
+#main-title h1{
+    width: 600px;
+    font-size: 80px;
+    white-space: nowrap;
+}
+#login-title {
+    margin-top: 100px;
+    text-align: center;
+    white-space: nowrap;
+}
+#login-title h2 {
+    color: #B4B4B4;
+    font-size: 30px;
+}
+#google-sign-in-btn {
+    margin: auto;
+    margin-top: 30px;
+    padding-right: 26px;
+    background-color: #F2F2F2;
+    border: none;
+    border-radius: 35px;
+    display: flex;
+    cursor: pointer;
+}
+#google-sign-in-btn:hover {
+    background-color: #EAEAEA;
+    border: 2px solid #8AB4F8;
+}
+#google-sign-in-btn img{
+    height: 58px;
+    width: 58px;
+    cursor: pointer;
+}
+#google-sign-in-btn label{
+    height: 10px;
+    width: 180px;
+    font-size: 18px;
+    padding-top:16px;
+    cursor: pointer;
+}
+#status-msg{
+    padding-top: 10px;
+    color: #B4B4B4;
+    font-size: 16px;
+}
+#status-msg img{
+    height: 38px;
+    width: 38px;
+    margin-bottom: 4px;
+    margin-right: 10px;
+}
+@media only screen and (max-width: 900px) {
+    #main-title h1{
+        width: 283px;
+        font-size: 38px;
+    }
+        #login-title h2 {
+        color: #B4B4B4;
+        font-size: 22px;
+    }
+    #google-sign-in-btn label{
+        height: 10px;
+        width: 170px;
+        font-size: 17px;
+        padding-top:17px;
+    }
+}

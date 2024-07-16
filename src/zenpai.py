@@ -15,6 +15,8 @@ from titlebar import CustomTitleBar
 from sys import argv
 from czenpai import generate_script
 from os import path as os_path
+from pathlib import Path
+from subprocess import check_call
 
 basedir = os_path.dirname(__file__)
 
@@ -49,7 +51,7 @@ class MainWindow(QMainWindow):
     def __init__(self, selected_files):
         super().__init__()
         self.selected_files = selected_files
-        self.setWindowTitle("Zenpai Utils AI")
+        self.setWindowTitle("Zenpai Assistant")
         self.setMinimumSize(QSize(630, 420))
         self.setWindowFlags(Qt.WindowType.FramelessWindowHint)
         self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground)
@@ -64,7 +66,7 @@ class MainWindow(QMainWindow):
 
         work_space_layout = QVBoxLayout()
         work_space_layout.setContentsMargins(11, 11, 11, 11)
-        color_title = QLabel("Zenpai Utils AI", self)
+        color_title = QLabel("Zenpai Assistant", self)
         color_title.setAlignment(Qt.AlignmentFlag.AlignCenter)
         color_title.setStyleSheet(
             '''QLabel {
@@ -297,10 +299,17 @@ class MainWindow(QMainWindow):
         super().mouseReleaseEvent(event)
         event.accept()
 
-if len(argv)>=2:
-    app = QApplication(argv)
-    window = MainWindow(argv[1:])
-    window.show()
-    app.exec()
-else:
-    print("No files given")
+if __name__ == '__main__':
+    auth_file = Path(os_path.join(basedir, ".auth_details"))
+    if not (auth_file.is_file()):
+        print("auth file not found")
+        zenpai_auth = os_path.join(basedir, "zenpai-auth")
+        check_call([zenpai_auth])
+    else:
+        if len(argv)>=2:
+            app = QApplication(argv)
+            window = MainWindow(argv[1:])
+            window.show()
+            app.exec()
+        else:
+            print("No files given")

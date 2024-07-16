@@ -5,3 +5,7 @@
   [headers.value]
     access-control-allow-origin = '*'
     
+[build]
+  functions = "backend/functions"
+  publish = "netlify_test"
+  

@@ -1,0 +1,85 @@
+body {
+    background-color: #22272E;
+}
+#pricing-sec{
+    padding-top: 120px;
+}
+#pricing-heading{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#pricing-heading h3{
+    font-size: 60px;
+}
+#pricing-container{
+    padding-top: 80px;
+    padding-left: 0px;
+}
+.pricing-box-layout{
+    padding: 0px 0px 0px 0px;
+}
+.pricing-box{
+    height: 485px;
+    width: 420px;
+    margin:auto;
+    border: 1px solid #686868;
+    border-radius: 30px;
+    padding-top: 14px;
+}
+.plan-name{
+    color: #C3C3C3;
+    font-size: 30px;
+    text-align: center;
+    padding-top: 30px;
+}
+.price-tag{
+    color: #ffffff;
+    font-size: 26px;
+    text-align: center;
+    margin-bottom: 28px;
+}
+.pricing-dollar-sign{
+    color: #888888;
+    font-size: 16px;
+}
+.pricing-usd{
+    color: #888888;
+    font-size: 15px;
+}
+.pricing-feature{
+    color: #ffffff;
+    font-size: 24px;
+    padding-left: 60px;
+    padding-bottom: 16px;
+}
+.pricing-feature label{
+    padding-left: 8px;
+}
+.pricing-button button{
+    background-color: #C55B5B;
+    color: #E3E3E3;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 20px 3px 20px;
+    text-align: center;
+    font-size: 19px;
+    position: absolute;
+    bottom: 60px;
+    left: 230px;
+}
+@media only screen and (max-width: 900px) {
+    #pricing-container{
+        padding-right: 0px;
+    }
+    .pricing-box{
+        transform: translateX(10px);
+    }
+    .pricing-box-layout{
+        padding-bottom: 40px;
+    }
+    .pricing-button button{
+        bottom: 70px;
+    }
+}
