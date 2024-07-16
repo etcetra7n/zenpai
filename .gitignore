@@ -1,11 +1,14 @@
-# Local Netlify folder
+# General
 .netlify
-__pycache__/
+**/__pycache__/
+
+# Firebase
+**/node_modules/*
+**/.firebaserc
+.runtimeconfig.json
+.firebase/
+
+# Distribution / packaging
 build/
 dist/
-*.txt
-*.pdf
-./*.png
-./*.jpg
-assets.py
-node_modules/
+*.spec
