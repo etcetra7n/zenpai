@@ -6,6 +6,6 @@
     access-control-allow-origin = '*'
     
 [build]
-  functions = "backend/api"
+  functions = "backend/functions"
   publish = "netlify_test"
   
