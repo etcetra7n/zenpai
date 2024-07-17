@@ -95,9 +95,9 @@ exports.handler = async (event, context) => {
   }
   let plan="free";
   const data = JSON.parse(event.body);
-  plan = getUserPlan(data.uid);
+  //plan = getUserPlan(data.uid);
   let requests_last_hour = 0;
-  requests_last_hour = getLastHourRequests(data.uid);
+  //requests_last_hour = getLastHourRequests(data.uid);
   if (plan == "free") {
     if (data.file_num > 50){
       return {

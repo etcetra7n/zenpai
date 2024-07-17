@@ -1,11 +1,13 @@
 from sys import argv, executable
 from re import escape, search
-from subprocess import check_call
-#import pdfkit
 from requests import post
 from pathlib import Path
 from json import load as json_load
 from os import path as os_path
+import pip
+
+import PIL
+import pdfkit
 
 basedir = os_path.dirname(__file__)
 
@@ -32,7 +34,11 @@ def install_required_packages(code):
 
     for pkg in required_packages:
         if not(package_exists(pkg)):
-            check_call([executable, "-m", "pip", "install", pkg])
+            if hasattr(pip, 'main'):
+                pip.main(['install', pkg])
+            else:
+                pip._internal.main(['install', pkg])
+            #check_call([executable, "-m", "pip", "install", pkg])
 
 def generate_script(instruction, selected_files):
     try:
