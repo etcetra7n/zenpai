@@ -11,7 +11,7 @@ const redirect_url = params.then;
 
 async function sendUserIdToBackend(userIdToken, tempId) {
   try{
-    const response = await fetch('http://localhost:8888/.netlify/functions/processUserId', {
+    const response = await fetch('https://zenpai.netlify.app/.netlify/functions/processUserId', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
