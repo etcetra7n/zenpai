@@ -1,28 +1,54 @@
-const firebase = require("firebase/app");
-const firestore = require("firebase/firestore");
-
-//require("firebase/auth");
+const admin = require('firebase-admin');
 const Groq = require('groq-sdk');
 
-const firebaseConfig = {
-  apiKey: "AIzaSyCQEh9RtXWiQtY0Y2nTkDPuxbYEJhKTkW8",
-  authDomain: "zenpai.firebaseapp.com",
-  projectId: "zenpai",
-  storageBucket: "zenpai.appspot.com",
-  messagingSenderId: "393234421305",
-  appId: "1:393234421305:web:cfa99cb18f11218043dfe8",
-  measurementId: "G-FH52BJJ207"
-};
-const app = firebase.initializeApp(firebaseConfig);
+const serviceAccount = require('../firebase-admin-serviceAccountKey.json');
 
-async function logInstruction(instruction, file_num, script) {
+if (!admin.apps.length) {
+  admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount)
+  });
+}
+const db = admin.firestore();
+
+async function getUserPlan(user_id){
+  try{
+      db.collection('users').doc(user_id).get()
+      .then((docSnapshot) => {
+        const userPlan = docSnapshot.get('plan');
+        console.log("plan= "+userPlan);
+        return userPlan;
+      });
+  } catch (error) {
+      throw error;
+  }
+}
+
+async function getLastHourRequests(user_id){
+  try{
+      const oneHourAgo = new Date();
+      oneHourAgo.setHours(oneHourAgo.getHours() - 1);
+      db.collection('instruct_log')
+      .where('uid', '==', user_id)
+      .where('timestamp', '>', oneHourAgo)
+      .get()
+      .then((snapshot) => {
+        const count = snapshot.size;
+        console.log("count= "+count);
+        return count;
+      });
+  } catch (error) {
+      throw error;
+  }
+}
+
+function logInstruction(instruction, user_id, file_num, script) {
     try{
-        const db = firestore.getFirestore(app);
-        await firestore.addDoc(firestore.collection(db, "instruct_log"), {
-          instruction: instruction,
-          fileNum: file_num,
-          result: script,
-          timestamp: firestore.serverTimestamp(),
+        db.collection('instruct_log').add({
+          "instruction": instruction,
+          "uid": user_id,
+          "file_num": file_num,
+          "result": script,
+          "timestamp": admin.firestore.FieldValue.serverTimestamp(),
         });
     } catch (error) {
         throw error;
@@ -70,8 +96,10 @@ exports.handler = async (event, context) => {
     };
   }
   const data = JSON.parse(event.body);
-  plan = getUserPlan(data.uid);
-  requests_last_hour = getLastHourRequests(data.uid);
+  const plan = await getUserPlan(data.uid);
+  console.log(plan);
+  const requests_last_hour = await getLastHourRequests(data.uid);
+  console.log(requests_last_hour);
   if (plan == "free") {
     if (data.file_num > 50){
       return {
@@ -79,23 +107,39 @@ exports.handler = async (event, context) => {
         body: JSON.stringify({ "message": "Free plan users cannot run on more than 50 files. Upgrade to Versatile or Effective plan for more" }),
       };
     }
+    if(requests_last_hour>30){
+      return {
+        statusCode: 429,
+        body: JSON.stringify({ "message": "Free plan users cannot run on more than 30 runs per hour. Upgrade to Versatile or Effective plan for more" }),
+      };
+    }
   } else if (plan == "versatile") {
     if (data.file_num > 360){
       return {
         statusCode: 403,
-        body: JSON.stringify({ "message": "Versatile plan users cannot run on more than 360 files. Upgrade to Effective plan for more" }),
+        body: JSON.stringify({ "message": "Versatile plan users cannot run on more than 360 files. Upgrade to Effective plan for unlimited files" }),
+      };
+    }
+    if(requests_last_hour>360){
+      return {
+        statusCode: 429,
+        body: JSON.stringify({ "message": "Versatile plan users cannot run on more than 360 runs per hour. Upgrade to Effective plan for more" }),
+      };
+    }
+  } else if (plan == "effective") {
+    if(requests_last_hour>500000){
+      return {
+        statusCode: 429,
+        body: JSON.stringify({ "message": "Effective plan users cannot run on more than 500,000 runs per hour. Request for more runs at contact@zenpai.pro" }),
       };
     }
   }
-  /*} else if (plan == "effective") {
-      
-  }*/
   let result = await generateScript(data.instruction, data.file_num);
   let script = result.split("```")[1];
   if (script.startsWith('python') || script.startsWith('Python')){
     script = script.substring(7);
   }
-  await logInstruction(data.instruction, data.file_num, script);
+ logInstruction(data.instruction, data.uid, data.file_num, script);
   return {
     statusCode: 200,
     body: JSON.stringify({ "py_script": script }),

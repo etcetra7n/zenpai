@@ -18,6 +18,7 @@ from os import path as os_path
 from pathlib import Path
 from subprocess import check_call
 from auth import zenpai_auth
+from os.path import basename
 
 basedir = os_path.dirname(__file__)
 
@@ -80,10 +81,12 @@ class MainWindow(QMainWindow):
             ''')
         work_space_layout.addWidget(color_title)
 
-        file_list_str = (str(selected_files)[1:-1]).replace("'", '')
-        if len(file_list_str)>65:
-            file_list_str = file_list_str[:65]+"..."
-        files_list = QLabel(file_list_str, self)
+        #file_full_paths = (str(selected_files)[1:-1]).replace("'", '')
+        file_paths = [basename(file) for file in selected_files]
+        file_paths_str = (str(file_paths)[1:-1]).replace("'", '')
+        if len(file_paths_str)>65:
+            file_paths_str = file_paths_str[:65]+"..."
+        files_list = QLabel(file_paths_str, self)
         files_list.setAlignment(Qt.AlignmentFlag.AlignLeft)
         files_list.setStyleSheet(
             '''QLabel {

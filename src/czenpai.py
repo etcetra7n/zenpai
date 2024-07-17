@@ -46,7 +46,6 @@ def generate_script(instruction, selected_files):
         with open(auth_file, 'r') as f:
             auth = json_load(f)
             request['uid'] = auth['uid']
-        print(request)
         response = post('https://zenpai.netlify.app/.netlify/functions/generateScript', json=request)
     except:
         raise

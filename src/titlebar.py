@@ -88,7 +88,7 @@ class CustomTitleBar(QWidget):
             self.close_button.setStyleSheet(
                 """ QToolButton {
                      border: none;
-                     padding: 13px;
+                     padding: 16px;
                     }
                     QToolButton:hover {
                      background: #c92828;
