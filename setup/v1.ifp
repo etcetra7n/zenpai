@@ -61,7 +61,7 @@ File = D:\zenpai\setup\ZenpaiSetup-v1.exe
 SetupIconPath = C:\Program Files (x86)\solicus\InstallForge\icons\modern.ico
 UninstallIconPath = C:\Program Files (x86)\solicus\InstallForge\icons\modern.ico
 CompressionMethod = 0
-CompressionLevel = 2
+CompressionLevel = 0
 [Updater]
 Allow = 0
 1 = <AppName>
@@ -83,11 +83,11 @@ D:\zenpai\dist\zenpai\_internal\
 N/A
 [Folder]
 [Licence_Begin]
-7233
+7229
 {\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang1033{\fonttbl{\f0\fnil Arial;}}
 {\colortbl ;\red0\green0\blue255;}
 {\*\generator Riched20 10.0.19041}\viewkind4\uc1 
-\pard\cf0\f0\fs20 This End-User License Agreement (EULA) is a legal agreement between you (either as an individual or on behalf of an entity) and Zenpai regarding your use of Zenpai Assistants's desktop applications, and associated documentation (the "Software"). IF YOU DO NOT AGREE TO ALL OF THE TERMS OF THIS EULA, DO NOT INSTALL, USE OR COPY THE SOFTWARE.\par
+\pard\f0\fs20 This End-User License Agreement (EULA) is a legal agreement between you (either as an individual or on behalf of an entity) and Zenpai regarding your use of Zenpai Assistants's desktop applications, and associated documentation (the "Software"). IF YOU DO NOT AGREE TO ALL OF THE TERMS OF THIS EULA, DO NOT INSTALL, USE OR COPY THE SOFTWARE.\par
 \par
 \b Summary\b0\par
 You must agree to all of the terms of this EULA to use this Software.\par
