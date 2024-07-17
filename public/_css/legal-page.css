@@ -1,0 +1,32 @@
+body {
+    background-color: #22272E;
+}
+.legal-text-content{
+    width: 58%;
+    font-size: 15px;
+    margin: auto;
+    margin-top: 70px;
+    margin-btoom: 70px;
+    padding:60px;
+    border: 1px solid #686868;
+    border-radius: 20px;
+    color: #ADBAC7;
+}
+.last-updated{
+    color: #686868;
+}
+.text-space{
+    height: 30px;
+}
+.zenpai-link {
+    color: #C55B5B;
+    text-decoration: none;
+}
+@media only screen and (max-width: 900px) {
+    .legal-text-content{
+        width: 100%;
+        border: none;
+        margin: 70px 0px 70px 0px;
+        paddin: 0px;
+    }
+}

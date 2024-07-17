@@ -59,6 +59,7 @@ body {
 }
 .pricing-button button{
     background-color: #C55B5B;
+    font-size: 15px;
     color: #E3E3E3;
     border: none;
     border-radius: 10px;
