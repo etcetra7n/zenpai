@@ -1,1 +1,78 @@
-let admin=require("firebase-admin"),serviceAccount=require("../firebase-admin-serviceAccountKey.json"),firestore=require("firebase/firestore"),db=(admin.apps.length||admin.initializeApp({credential:admin.credential.cert(serviceAccount)}),admin.firestore());async function deleteTempIdFromDatabase(e){db.collection("users").doc(e).update({temp_id:"undefined"})}async function queryTempIdFromDatabase(e){try{var r=await db.collection("users").where("temp_id","==",e).get();return r.empty?null:(r.forEach(async e=>{result={uid:e.data().uid,email:e.data().email}}),result)}catch(e){throw e}}exports.handler=async(e,r)=>{var t={"Access-Control-Allow-Origin":"*","Access-Control-Allow-Methods":"POST, OPTIONS, GET","Access-Control-Allow-Headers":"Content-Type"};if("OPTIONS"==e.httpMethod)return{statusCode:200,headers:t,body:JSON.stringify({message:"success"})};e=JSON.parse(e.body).temp_id;try{var a=await queryTempIdFromDatabase(e);return null===a?{statusCode:204,headers:t,body:JSON.stringify({message:"No record found"})}:(await deleteTempIdFromDatabase(a.uid),{statusCode:200,headers:t,body:JSON.stringify(a)})}catch(e){return console.error("Error in processing tempId",e),{statusCode:500,headers:t,body:JSON.stringify({message:"Internal server error"})}}};
+const admin = require('firebase-admin');
+const serviceAccount = require('../firebase-admin-serviceAccountKey.json');
+const firestore = require("firebase/firestore");
+
+if (!admin.apps.length) {
+  admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount)
+  });
+}const db = admin.firestore();
+
+async function deleteTempIdFromDatabase(userId){
+  var userRef = db.collection('users').doc(userId);
+  userRef.update({
+    "temp_id": 'undefined'
+  });
+}
+
+async function queryTempIdFromDatabase(tempId){
+  try{
+      const UsersRef = db.collection('users')
+      const querySnapshot = await UsersRef.where("temp_id", "==", tempId).get();
+      if (!querySnapshot.empty) {
+        querySnapshot.forEach(async(doc) => {
+          result = {
+            "uid": doc.data().uid,
+            "email": doc.data().email,
+          };
+        });
+        return result;
+      } else {
+        return null;
+      }
+  } catch (error) {
+      throw error;
+  }
+}
+
+exports.handler = async (event, context) => {
+  const commonHeaders = {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'POST, OPTIONS, GET',
+    'Access-Control-Allow-Headers': 'Content-Type'
+  };
+  if (event.httpMethod == 'OPTIONS') {
+    return {
+      statusCode: 200,
+      headers: commonHeaders,
+      body: JSON.stringify({ message: "success" })
+    };
+  }
+  const tempId = JSON.parse(event.body).temp_id;
+  try {
+    const result = await queryTempIdFromDatabase(tempId);
+    if (result === null){
+      return {
+        statusCode: 204,
+        headers: commonHeaders,
+        body: JSON.stringify({ message: "No record found" }),
+      };
+    } else {
+      // tempId expires as soon as it is read
+      await deleteTempIdFromDatabase(result.uid);
+      return {
+        statusCode: 200,
+        headers: commonHeaders,
+        body: JSON.stringify(result),
+      };
+    }
+    
+  } catch (error) {
+    console.error('Error in processing tempId', error);
+    return {
+      statusCode: 500,
+      headers: commonHeaders,
+      body: JSON.stringify({ message: "Internal server error" }),
+    };
+  }
+};

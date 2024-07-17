@@ -12,7 +12,7 @@ from titlebar import CustomTitleBar
 from sys import argv
 from sys import exit as sys_exit
 from os import path as os_path
-from webbrowser import open as web_open
+from webbrowser import open_new_tab
 from secrets import choice
 from requests import get as requests_get
 from requests import exceptions as req_exceptions
@@ -23,7 +23,7 @@ from json import load as json_load
 from json import dump as json_dump
 
 basedir = os_path.dirname(__file__)
-signed_in = False
+window_closed = False
 
 try:
     from ctypes import windll  # Only exists on Windows.
@@ -53,18 +53,20 @@ class Worker(QRunnable):
         data = {'temp_id': self.tempId}
         auth_email = ""
         try:
-            for _ in range(150):
-                sleep(1)
+            for _ in range(300):
+                sleep(2)
                 response = requests_get(url, json=data, timeout=20)
                 response.raise_for_status()
+                print(response.status_code)
                 if response.status_code == 200:
                     auth_email = response.json()['email']
                     with open(os_path.join(basedir, '.auth_details'), 'w') as f:
                         json_dump(response.json(), f, indent=2)
                     break;
+                if window_closed:
+                    break
             else:
                 print("Reached maximum number of tries")
-            signed_in = True
             self.signals.signin_success.emit(auth_email)
 
         except req_exceptions.Timeout:
@@ -199,17 +201,12 @@ class AuthWindow(QMainWindow):
 
     def signInBtn_clicked(self, event):
         tempId = generate_temp_id()
-        web_open('https://zenpai.pro/auth?tempId='+tempId)
+        open_new_tab('https://zenpai.pro/auth?tempId='+tempId)
         worker = Worker(tempId)
         worker.signals.signin_success.connect(self.show_signin_success)
         self.threadpool.start(worker)
 
     def show_signin_success(self, auth_email):
-        #status_label = QLabel()
-        #status_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        #status_label.setFixedSize(QSize(570, 60))
-        #self.work_space_layout.addWidget(status_label)
-
         self.status_msg = QPushButton("You are signed in as "+auth_email)
         self.status_msg.setStyleSheet(
             '''QPushButton {
@@ -227,18 +224,6 @@ class AuthWindow(QMainWindow):
         self.space_row.setVisible(False)
         self.bottom_version.setVisible(False)
         self.work_space_layout.addWidget(self.status_msg)
-
-        '''
-        transform = QTransform()
-
-        # Applying transformations
-        transform.translate(50, 20)  # Translate by (50, 20)
-        transform.rotate(45)          # Rotate by 45 degrees
-        transform.scale(2, 2)         # Scale by a factor of 2 in both x and y directions
-
-        # Applying the transformation to a widget
-        widget.setTransform(transform)
-        '''
 
     def changeEvent(self, event):
         if event.type() == QEvent.Type.WindowStateChange:
@@ -268,15 +253,15 @@ class AuthWindow(QMainWindow):
         event.accept()
 
     def closeEvent(self, event):
-        #self.threadpool.started()
-        event.accept() # let the window close
+        window_closed = True
+        event.accept()
 
 def zenpai_auth():
     app = QApplication(argv)
     app.setWindowIcon(QIcon(os_path.join(basedir, "assets", "icon.ico")))
     window = AuthWindow()
     window.show()
-    sys_exit(app.exec())
+    app.exec()
     
 if __name__ == '__main__':
     zenpai_auth()

@@ -4,8 +4,6 @@ import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstati
 const auth = getAuth(app);
 
 async function sendUserIdToBackend(userIdToken, tempId) {
-  //https://zenpai.netlify.app/.netlify/functions/processUserIdToken
-  //localhost:8888/.netlify/functions/processUserIdToken
   try{
     const response = await fetch('https://zenpai.netlify.app/.netlify/functions/processUserId', {
         method: 'POST',
@@ -32,6 +30,7 @@ googleSignInBtn.addEventListener('click', async => {
     get: (searchParams, prop) => searchParams.get(prop),
   });
   const tempId = params.tempId; // "some value, perhaps undefined"
+  const redirect_url = params.then;
   googleSignInBtn.remove();
   let statusMsg = document.getElementById("status-msg");
   statusMsg.innerHTML = `<img src="../_static/loading.gif"> Waiting for confirmation`;
@@ -44,13 +43,10 @@ googleSignInBtn.addEventListener('click', async => {
       return userDetails
 
     }).then((userDetails) => {
-      const redirect_url = params.then;
-      const temp_id = params.tempId;
       if(redirect_url !== null){
         window.location.href = redirect_url;
       } else {
-        if (temp_id !== null){
-          //const loginScreen = document.getElementById('login-screen-container');
+        if (tempId !== null){
           let googleSignInBtn = document.getElementById("google-sign-in-btn");
           if (googleSignInBtn !== null){
             googleSignInBtn.remove();
@@ -71,7 +67,7 @@ googleSignInBtn.addEventListener('click', async => {
       const errorMessage = error.message;
       //const credential = GoogleAuthProvider.credentialFromError(error);
       console.error('Error during sign-in: ', errorCode, errorMessage);
-      logEvent(analytics, 'crash', { name: 'auth_sign_in '});
+      logEvent(analytics, 'crash', { name: 'auth_sign_in'});
       throw error;
     });
 });
