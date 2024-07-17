@@ -53,7 +53,7 @@ class Worker(QRunnable):
         data = {'temp_id': self.tempId}
         auth_email = ""
         try:
-            for _ in range(300):
+            for i in range(300):
                 sleep(2)
                 response = requests_get(url, json=data, timeout=20)
                 response.raise_for_status()
@@ -63,8 +63,6 @@ class Worker(QRunnable):
                     with open(os_path.join(basedir, '.auth_details'), 'w') as f:
                         json_dump(response.json(), f, indent=2)
                     break;
-                if window_closed:
-                    break
             else:
                 print("Reached maximum number of tries")
             self.signals.signin_success.emit(auth_email)

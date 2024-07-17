@@ -65,7 +65,7 @@ exports.handler = async (event, context) => {
     };
   }
   const userIdToken = JSON.parse(event.body).userIdToken;
-  const tempId = JSON.parse(event.body).tempId;
+  const tempId = JSON.parse(event.body).temp_id;
   try {
     // Verify the ID token
     const decodedToken = await admin.auth().verifyIdToken(userIdToken);
@@ -81,10 +81,9 @@ exports.handler = async (event, context) => {
   } catch (error) {
     console.error('Error verifying ID token:', error);
     return {
-      statusCode: 500,
+      statusCode: 401,
       headers: commonHeaders,
-      body: JSON.stringify({ message: "Internal server error" }),
+      body: JSON.stringify({ message: "Invalid" }),
     };
   }
-  //await enterUserToDatabase(decodedToken);
 };

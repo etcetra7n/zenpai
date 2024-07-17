@@ -12,7 +12,7 @@ async function sendUserIdToBackend(userIdToken, tempId) {
         },
         body: JSON.stringify({
             "userIdToken": await userIdToken,
-            "tempId": await tempId,
+            "temp_id": await tempId,
         })
       });
    
@@ -33,12 +33,13 @@ googleSignInBtn.addEventListener('click', async => {
   const redirect_url = params.then;
   googleSignInBtn.remove();
   let statusMsg = document.getElementById("status-msg");
-  statusMsg.innerHTML = `<img src="../_static/loading.gif"> Waiting for confirmation`;
+  statusMsg.innerHTML = `<img src="../_static/loading.gif"> Please wait...`;
   signInWithPopup(auth, provider)
     .then(async(result) => {
       //const credential = GoogleAuthProvider.credentialFromResult(result);
       //const token = credential.accessToken;
       const userIdToken = await result.user.getIdToken();
+      console.log(userIdToken);
       const userDetails = await sendUserIdToBackend(userIdToken, tempId);
       return userDetails
 
