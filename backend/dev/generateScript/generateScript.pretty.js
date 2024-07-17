@@ -1,16 +1,9 @@
-// Docs on event and context https://docs.netlify.com/functions/build/#code-your-function-2
-/*import { initializeApp } from 'firebase/app'
-import { getFirestore, collection, doc, where, setDoc, query, getDocs, onSnapshot } from 'firebase/firestore'
-import { getStorage, ref, getDownloadURL } from "firebase/storage";*/
-
 const firebase = require("firebase/app");
 const firestore = require("firebase/firestore");
 
 //require("firebase/auth");
 const Groq = require('groq-sdk');
 
-// TODO: Replace the following with your app's Firebase project configuration
-// See: https://support.google.com/firebase/answer/7015592
 const firebaseConfig = {
   apiKey: "AIzaSyCQEh9RtXWiQtY0Y2nTkDPuxbYEJhKTkW8",
   authDomain: "zenpai.firebaseapp.com",

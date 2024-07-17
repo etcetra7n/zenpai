@@ -17,6 +17,7 @@ async function deleteTempIdFromDatabase(userId){
 
 async function queryTempIdFromDatabase(tempId){
   try{
+      let result = null;
       const UsersRef = db.collection('users')
       const querySnapshot = await UsersRef.where("temp_id", "==", tempId).get();
       if (!querySnapshot.empty) {
@@ -26,10 +27,8 @@ async function queryTempIdFromDatabase(tempId){
             "email": doc.data().email,
           };
         });
-        return result;
-      } else {
-        return null;
       }
+    return result;
   } catch (error) {
       throw error;
   }
