@@ -49,7 +49,7 @@ class Worker(QRunnable):
 
     @Slot()
     def run(self):
-        url = "https://zenpai/.netlify/functions/processTempId"
+        url = "https://zenpai.netlify.app/.netlify/functions/processTempId"
         data = {'temp_id': self.tempId}
         auth_email = ""
         try:
