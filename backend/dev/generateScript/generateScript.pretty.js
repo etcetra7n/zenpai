@@ -15,7 +15,6 @@ async function getUserPlan(user_id){
       db.collection('users').doc(user_id).get()
       .then((docSnapshot) => {
         const userPlan = docSnapshot.get('plan');
-        console.log("plan= "+userPlan);
         return userPlan;
       });
   } catch (error) {
@@ -33,7 +32,6 @@ async function getLastHourRequests(user_id){
       .get()
       .then((snapshot) => {
         const count = snapshot.size;
-        console.log("count= "+count);
         return count;
       });
   } catch (error) {
@@ -95,11 +93,11 @@ exports.handler = async (event, context) => {
       body: 'Method Not Allowed',
     };
   }
+  let plan="free";
   const data = JSON.parse(event.body);
-  const plan = await getUserPlan(data.uid);
-  console.log(plan);
-  const requests_last_hour = await getLastHourRequests(data.uid);
-  console.log(requests_last_hour);
+  plan = getUserPlan(data.uid);
+  let requests_last_hour = 0;
+  requests_last_hour = getLastHourRequests(data.uid);
   if (plan == "free") {
     if (data.file_num > 50){
       return {
