@@ -5,6 +5,7 @@
 # Firebase
 **/node_modules/*
 **/.firebaserc
+firebase-debug.log
 .runtimeconfig.json
 .firebase/
 
@@ -12,3 +13,4 @@
 build/
 dist/
 *.spec
+setup/*.exe
