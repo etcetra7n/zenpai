@@ -1,6 +1,5 @@
 const admin = require('firebase-admin');
 const Groq = require('groq-sdk');
-
 const serviceAccount = require('../firebase-admin-serviceAccountKey.json');
 
 if (!admin.apps.length) {
@@ -39,15 +38,16 @@ async function getLastHourRequests(user_id){
   }
 }
 
-function logInstruction(instruction, user_id, file_num, script) {
+async function logInstruction(instruction, user_id, file_num, script) {
     try{
-        db.collection('instruct_log').add({
+        await db.collection('instruct_log').add({
           "instruction": instruction,
           "uid": user_id,
           "file_num": file_num,
           "result": script,
           "timestamp": admin.firestore.FieldValue.serverTimestamp(),
         });
+        return;
     } catch (error) {
         throw error;
     }
@@ -93,8 +93,9 @@ exports.handler = async (event, context) => {
       body: 'Method Not Allowed',
     };
   }
-  let plan="free";
   const data = JSON.parse(event.body);
+  /*
+  let plan="free";
   //plan = getUserPlan(data.uid);
   let requests_last_hour = 0;
   //requests_last_hour = getLastHourRequests(data.uid);
@@ -131,13 +132,13 @@ exports.handler = async (event, context) => {
         body: JSON.stringify({ "message": "Effective plan users cannot run on more than 500,000 runs per hour. Request for more runs at contact@zenpai.pro" }),
       };
     }
-  }
+  }*/
   let result = await generateScript(data.instruction, data.file_num);
   let script = result.split("```")[1];
   if (script.startsWith('python') || script.startsWith('Python')){
     script = script.substring(7);
   }
- logInstruction(data.instruction, data.uid, data.file_num, script);
+ await logInstruction(data.instruction, data.uid, data.file_num, script);
   return {
     statusCode: 200,
     body: JSON.stringify({ "py_script": script }),
