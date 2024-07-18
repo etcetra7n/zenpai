@@ -23,12 +23,9 @@ body {
     padding-top: 80px;
     padding-left: 0px;
 }
-.pricing-box-layout{
-    padding: 0px 0px 0px 0px;
-}
 .pricing-box{
-    height: 485px;
-    width: 420px;
+    height: 420px;
+    width: 370px;
     margin:auto;
     border: 1px solid #686868;
     border-radius: 30px;
@@ -56,12 +53,15 @@ body {
 }
 .pricing-feature{
     color: #ffffff;
-    font-size: 24px;
-    padding-left: 60px;
+    font-size: 21px;
+    padding-left: 50px;
     padding-bottom: 16px;
 }
 .pricing-feature label{
     padding-left: 8px;
+}
+.price-btn-row{
+    width: 100%;
 }
 .pricing-button button{
     background-color: #C55B5B;
@@ -73,8 +73,8 @@ body {
     text-align: center;
     font-size: 19px;
     position: relative;
-    top: 110px;
-    left: 128px;
+    top: 60px;
+    left: 27%;
 }
 @media only screen and (max-width: 900px) {
     #pricing-container{
@@ -90,5 +90,23 @@ body {
     }
     .pricing-button button{
         bottom: 70px;
+    }
+}
+@media only screen and (max-width: 600px) {
+    .pricing-box{
+        width: 85%;
+        height: 400px;
+        padding-right: 8px;
+    }
+    .pricing-feature{
+        font-size: 17px;
+        text-align: left;
+    }
+    .pricing-button button{
+        text-align: center;
+        font-size: 18px;
+        position: relative;
+        top: 45px;
+        left: 26%;
     }
 }
