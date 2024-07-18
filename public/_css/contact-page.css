@@ -44,8 +44,12 @@ body {
 }
 #submit-btn-layout{
     text-align: right;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
     text-align: right;
+    -webkit-box-pack: right;
+    -ms-flex-pack: right;
     justify-content: right;
 }
 #status-msg {
@@ -70,7 +74,11 @@ body {
     color: #E3E3E3;
     border: none;
     border-radius: 7px;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
     align-items: center;
     cursor: pointer;
 }
@@ -108,10 +116,11 @@ body {
     #btn-row{
         width: 100%;
         text-align: center;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
         justify-content: center;
     }
     #contact-form-btn{
         margin-right: 0px;
     }
-
 }

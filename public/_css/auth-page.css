@@ -35,6 +35,8 @@ body {
     background-color: #F2F2F2;
     border: none;
     border-radius: 35px;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
     cursor: pointer;
 }
