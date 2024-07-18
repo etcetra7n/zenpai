@@ -15,12 +15,15 @@ from titlebar import CustomTitleBar
 from sys import argv
 from czenpai import generate_script
 from os import path as os_path
+from os import getenv, makedirs
 from pathlib import Path
-from subprocess import check_call
 from auth import zenpai_auth
 from os.path import basename
 
 basedir = os_path.dirname(__file__)
+appdata_path = os_path.join(getenv('APPDATA'), "Zenpai")
+if not os_path.exists(appdata_path):
+    makedirs(appdata_path)
 
 try:
     from ctypes import windll  # Only exists on Windows.
@@ -40,6 +43,8 @@ class Worker(QRunnable):
     @Slot()  # QtCore.Slot
     def run(self):
         try:
+            #czenpai_path = os_path.join(basedir, "czenpai", "czenpai.py")
+            #check_call([python_path, czenpai_path, self.instruction]+self.selected_files)
             generate_script(self.instruction, self.selected_files)
         except:
             self.running_stat.setVisible(False)
@@ -304,7 +309,7 @@ class MainWindow(QMainWindow):
         event.accept()
 
 if __name__ == '__main__':
-    auth_file = Path(os_path.join(basedir, ".auth_details"))
+    auth_file = Path(os_path.join(appdata_path, "zenpai.auth"))
     if not (auth_file.is_file()):
         print("You are not signed in.")
         zenpai_auth()

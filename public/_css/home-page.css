@@ -150,11 +150,23 @@ body {
 }
 
 @media only screen and (max-width: 900px) {
+    #first-sec-heading{
+        font-size: 60px;
+        width: 178px;
+    }
+    #heading-tags{
+        color: #8D96A0;
+        font-size: 12px;
+        text-align: center;
+    }
+    #heading-tags label {
+        width: 380px;
+    }
     #first-sec-right {
         text-align: center;
         -webkit-box-align: center;
-            -ms-flex-align: center;
-                align-items: center;
+        -ms-flex-align: center;
+        align-items: center;
         margin-bottom: 80px;
     }
     #first-sec-right iframe{

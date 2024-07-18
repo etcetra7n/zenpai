@@ -12,6 +12,7 @@ from titlebar import CustomTitleBar
 from sys import argv
 from sys import exit as sys_exit
 from os import path as os_path
+from os import getenv, makedirs
 from webbrowser import open_new_tab
 from secrets import choice
 from requests import get as requests_get
@@ -23,6 +24,9 @@ from json import load as json_load
 from json import dump as json_dump
 
 basedir = os_path.dirname(__file__)
+appdata_path = os_path.join(getenv('APPDATA'), "Zenpai")
+if not os_path.exists(appdata_path):
+    makedirs(appdata_path)
 window_closed = False
 
 try:
@@ -59,7 +63,7 @@ class Worker(QRunnable):
                 #response.raise_for_status()
                 if response.status_code == 200:
                     auth_email = response.json()['email']
-                    with open(os_path.join(basedir, '.auth_details'), 'w') as f:
+                    with open(os_path.join(appdata_path, 'zenpai.auth'), 'w') as f:
                         json_dump(response.json(), f, indent=2)
                     break;
             else:
@@ -189,10 +193,10 @@ class AuthWindow(QMainWindow):
         self.setCentralWidget(central_widget)
         self.threadpool = QThreadPool()
 
-        auth_file = Path(os_path.join(basedir, ".auth_details"))
+        auth_file = Path(os_path.join(appdata_path, "zenpai.auth"))
         if (auth_file.is_file()):
             auth = {}
-            with open('.auth_details', 'r') as f:
+            with open(auth_file, 'r') as f:
                 auth = json_load(f)
             self.show_signin_success(auth['email'])
 
