@@ -138,6 +138,9 @@ exports.handler = async (event, context) => {
   if (script.startsWith('python') || script.startsWith('Python')){
     script = script.substring(7);
   }
+  if (script.startsWith(' ')) {
+    script = script.substring(1);
+  }
  await logInstruction(data.instruction, data.uid, data.file_num, script);
   return {
     statusCode: 200,

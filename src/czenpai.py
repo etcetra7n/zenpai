@@ -68,7 +68,7 @@ def generate_script(instruction, selected_files):
         return(0)
     else:
         print(response.text)
-        #raise RuntimeError
+        raise RuntimeError
 
 if __name__ == '__main__':
     if len(argv)>=3:
