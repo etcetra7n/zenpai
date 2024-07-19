@@ -59,7 +59,7 @@ Allow = 0
 [Build]
 File = D:\zenpai\setup\ZenpaiSetup-v1.exe
 SetupIconPath = C:\Program Files (x86)\solicus\InstallForge\icons\modern.ico
-UninstallIconPath = C:\Program Files (x86)\solicus\InstallForge\icons\modern.ico
+UninstallIconPath = D:\zenpai\assets\icon-256.ico
 CompressionMethod = 0
 CompressionLevel = 1
 [Updater]
