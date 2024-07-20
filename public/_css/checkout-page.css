@@ -1,5 +1,7 @@
 body {
+    width: 100%;
     background-color: #ffffff;
+    margin: 0px;
 }
 #nav-designator label{
     color: #B3B3B3;
@@ -7,6 +9,8 @@ body {
 }
 
 #header{
+    width: 100%;
+    margin: 0px;
     border-bottom: 1px solid #444C56;
     background-color: #1C2128;
 }
@@ -29,12 +33,15 @@ body {
     padding: 0px;
     width:114px;
     height: 50px;
-    background: -webkit-gradient(linear, left top, right top, from(#C55B5B), to(#979797));
     background: -o-linear-gradient(left, #C55B5B, #979797);
+    background: -webkit-gradient(linear, left top, right top, from(#C55B5B), to(#979797));
     background: linear-gradient(to right, #C55B5B, #979797);
     -webkit-background-clip: text;
     color: transparent;
     cursor: pointer;
+}
+#checkout-page {
+    width: 100%;
 }
 #checkout-page-left{
     display: -webkit-box;
@@ -49,9 +56,10 @@ body {
 }
 #checkout-width-controller{
     width: 40%;
+    padding-top: 60px;
 }
 #info-container{
-    margin-top: 50px;
+    margin-top: 30px;
 }
 #nav-designator{
     display: -webkit-box;
@@ -67,10 +75,16 @@ body {
 .info-box-left label{
     color: #000000;
     font-size: 19px;
+    padding-bottom: 13px;
+}
+.info-box-right{
+    padding-left:6px;
 }
 .info-box-right p{
     color: #777777;
-    height: 10px;
+    line-height: 22px;
+    padding:0;
+    margin-bottom:6px;
 }
 .checkout-title{
     color: #A74A4A;
@@ -89,11 +103,14 @@ body {
     margin-top: 8px;
 
     display: -ms-flexbox;
+    display: -webkit-box;
     display: flex;
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
-    justify-content: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
 }
 #paypal-button-container{
     width: 75%;
@@ -101,16 +118,51 @@ body {
 #status-msg {
     text-align: left;
     margin-top: 11px;
-    padding-left: 5px;
-    color: #777777;
+    padding-left: 10px;
+    color: #323232;
+    margin-bottom: 100px;
 }
 #status-msg img{
-    height: 23px;
-    width: 23px;
+    height: 29px;
+    width: 29px;
     margin-right: 7px;
+    margin-bottom: 4px;
 }
 #status-msg label{
-    margin-top: 7px;
+    margin-top: 2px;
+    font-size: 18px;
+}
+#payment-confirmation-screen{
+    width: 37%;
+    margin: auto;
+    margin-top: 50px;
+    padding: 40px 60px 8px 60px;
+    border: 1px solid #565656;
+    border-radius: 8px;
+    margin-bottom:120px;
+}
+#payment-confirmation-screen h1 label{
+    font-size: 28px;
+    color: #2E893C;
+}
+#payment-confirmation-screen h1 label img{
+    width: 30px;
+    height: 30px;
+    margin-bottom: 5px;
+}
+#confirm-details{
+    margin-top: 50px;
+}
+#confirm-details p{
+    line-height: 11px;
+}
+#confirm-details p:first-of-type{
+    line-height: 23px;
+    padding-bottom:10px;
+}
+#confirm-timstamp{
+    margin-top: 190px;
+    font-size: 12px;
 }
 @media only screen and (max-width: 1200px) {
     #paypal-button-container{
@@ -119,6 +171,9 @@ body {
     #checkout-screen-container {
         padding:30px 10px;
     }
+    #payment-confirmation-screen{
+        width: 60%;
+    }
 }
 @media only screen and (max-width: 700px) {
     #checkout-width-controller{
@@ -126,5 +181,12 @@ body {
     }
     #checkout-screen-container {
         padding:30px 30px;
+    }
+    #payment-confirmation-screen{
+        width: 90%;
+        padding: 40px 40px 8px 40px;
+    }
+    #confirm-timstamp{
+        margin-top: 100px;
     }
 }

@@ -5,7 +5,9 @@ commands = [
 
     "uglifyjs -o functions/processTempId/processTempId.js --compress --mangle --warn dev/processTempId/processTempId.pretty.js",
 
-    "uglifyjs -o functions/processUserId/processUserId.js --compress --mangle --warn dev/processUserId/processUserId.pretty.js"
+    "uglifyjs -o functions/processUserId/processUserId.js --compress --mangle --warn dev/processUserId/processUserId.pretty.js",
+
+    "uglifyjs -o functions/processPayment/processPayment.js --compress --mangle --warn dev/processPayment/processPayment.pretty.js",
 ]
 
 for com in commands:

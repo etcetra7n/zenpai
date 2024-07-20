@@ -7,6 +7,31 @@ if (!admin.apps.length) {
   });
 }
 const db = admin.firestore();
+/*
+const price = {
+ 'versatile': 8,
+ 'effective': 11,
+};*/
+
+/*const generateAccessToken = async () => {
+  try {
+    const auth = Buffer.from(
+      PAYPAL_CLIENT_ID + ":" + PAYPAL_CLIENT_SECRET
+    ).toString("base64");
+    const response = await fetch(`https://api-m.sandbox.paypal.com/v1/oauth2/token`, {
+      method: "POST",
+      body: "grant_type=client_credentials",
+      headers: {
+        Authorization: `Basic ${auth}`,
+      },
+    });
+
+    const data = await response.json();
+    return data.access_token;
+  } catch (error) {
+    console.error("Failed to generate Access Token:", error);
+  }
+};*/
 
 async function updatePlan(uid, plan){
   try{
@@ -27,9 +52,10 @@ async function updatePlan(uid, plan){
 async function logPayment(uid, plan, orderDetails) {
     try{
         await db.collection('payment_log').add({
-          "uid": instruction,
-          "plan": user_id,
-          "order_details": orderDetails,
+          "uid": uid,
+          "plan": plan,
+          "status": orderDetails.status,
+          "statusText": orderDetails.statusText,
           "timestamp": admin.firestore.FieldValue.serverTimestamp(),
         });
         return;
@@ -52,37 +78,45 @@ exports.handler = async (event, context) => {
     };
   }
   const data = JSON.parse(event.body);
+  /*const accessToken = await generateAccessToken();*/
+  /*const payload = {
+    intent: "CAPTURE",
+    purchase_units: [
+      {
+        amount: {
+          currency_code: "USD",
+          value: price[data.plan],
+        },
+      },
+    ],
+  };*/
   try {
-    fetch(`https://api-m.sandbox.paypal.com/v2/checkout/orders/${order.orderId}/capture`, {
+    const auth = Buffer.from(
+      PAYPAL_CLIENT_ID + ":" + PAYPAL_CLIENT_SECRET
+    ).toString("base64");
+    const orderDetails = await fetch(`https://api-m.paypal.com/v2/checkout/orders/${data.orderId}/capture`, {
         method: 'POST',
         headers: {
-            'PayPal-Request-Id': '7b92603e-77ed-4896-8e78-5dea2050476a',
-            'Authorization': 'Bearer access_token6V7rbVwmlM1gFZKW_8QtzWXqpcwQ6T5vhEGYNJDAAdn3paCgRpdeMdVYmWzgbKSsECednupJ3Zx5Xd-g'
-        }
-    }).then((response) => {
-      const orderDetails = JSON.parse(response.body)
-      await logPayment(data.uid, data.plan, orderDetails);
-      if (orderDetails.status == "COMPLETED"){
-        await updatePlan(data.uid, data.plan);
-        return {
-          statusCode: 200,
-          headers: commonHeaders,
-          body: JSON.stringify(orderDetails),
-        };
-      } else {
-        return {
-          statusCode: 402,
-          headers: commonHeaders,
-          body: JSON.stringify(orderDetails),
-        };
-      }
+            "Content-Type": "application/json",
+            "Authorization": `Basic ${auth}`,
+          },
     });
+    await logPayment(data.uid, data.plan, await orderDetails);
+    console.log(orderDetails);
+    if (orderDetails.ok){
+      await updatePlan(data.uid, data.plan);
+    }
+    return {
+      statusCode: await orderDetails.status,
+      headers: commonHeaders,
+      body: JSON.stringify({orderDetails}),
+    };
   } catch (error) {
     console.error('Error verifying ID token:', error);
     return {
-      statusCode: 401,
+      statusCode: 500,
       headers: commonHeaders,
-      body: JSON.stringify({ message: "Invalid" }),
+      body: JSON.stringify({ message: "Something went wrong" }),
     };
   }
 };

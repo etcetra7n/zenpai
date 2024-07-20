@@ -1,10 +1,10 @@
-import { app, logEvent, analytics } from "/_js/common.js";
+import { app, logEvent, analytics } from "/_js/firebase-init.js";
 import { getCookie } from "/_js/cookies.js"
 
 const params = new Proxy(new URLSearchParams(window.location.search), {
   get: (searchParams, prop) => searchParams.get(prop),
 });
-const plan = params.plan; // "some value, perhaps undefined"
+const plan = params.plan;
 const uid = getCookie("uid");
 const email = getCookie("email");
 const rname = getCookie("name");
@@ -15,7 +15,8 @@ if ((uid==null)||(uid=="")){
 if (plan==null){
   window.location.href = "../pricing?ref=sr_1_2&_encoding=UTF8&content-id=2.sym.16580615-fbf7";
 }
-
+const planName = plan.charAt(0).toUpperCase() + plan.slice(1);
+let currentTimestamp = new Date()
 let planExpiryDate = new Date();
 planExpiryDate.setMonth(planExpiryDate.getMonth() + 1);
 let formattedDate = new Intl.DateTimeFormat('en-US', {
@@ -26,20 +27,25 @@ let formattedDate = new Intl.DateTimeFormat('en-US', {
 
 let accountDetails = document.getElementById("account-details");
 let purchaseDetails = document.getElementById("purchase-details");
+let totalAmout = document.getElementById("total-amount");
+let planTitle = document.getElementById("plan-title");
 
+planTitle.innerHTML = `${planName} plan payment`;
 accountDetails.innerHTML = `
   <p>Name: ${rname}</p>
   <p>Email: ${email}</p>
 `;
 purchaseDetails.innerHTML = `
-  <p>Plan name: ${plan}</p>
+  <p>Plan name: ${planName}</p>
   <p>Validity: 1 month</p>
   <p>Expires on: ${formattedDate}</p>
 `;
+
 const price = {
- 'versatile': 0.4,
- 'effective': 0.5
+ 'versatile': '0.4',
+ 'effective': '0.5'
 };
+totalAmout.innerHTML = `<p><strong>$${price[plan]}</strong></p>`;
 window.paypal
   .Buttons({
     style: {
@@ -52,12 +58,10 @@ window.paypal
       amount: 8,
     },
     createOrder: (data, actions) => {
-      /*let statusMsg = document.getElementById("status-msg");
-      statusMsg.innerHTML = '<label><img src="../_static/loading.gif"> Please wait. Do not close the window</label>';*/
       return actions.order.create({
         purchase_units: [
             {
-              description: plan +" plan",
+              description: "Zenpai "+planName +" plan",
               amount: {
                 currency_code: 'USD',
                 value: price[plan],
@@ -67,9 +71,10 @@ window.paypal
         });
       },
     async onApprove(data, actions) {
+      let statusMsg = document.getElementById("status-msg");
+      statusMsg.innerHTML = '<label><img src="../_static/loading.gif"> Please wait. Do not close the window</label>';
       try {
-        console.log(data);
-        const response = await fetch("http://localhost:8888/.netlify/functions/processPayment", {
+        await fetch("https://zenpai.netlify.app/.netlify/functions/processPayment", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -79,46 +84,83 @@ window.paypal
             "plan": plan,
             "orderId": data.orderID,
           })
-        });
+        }).then(res => res)  // Parse JSON response
+          .then(orderData => {
+            console.log(orderData);
+            // Three cases to handle:
+            //   (1) Recoverable INSTRUMENT_DECLINED -> call actions.restart()
+            //   (2) Other non-recoverable errors -> Show a failure message
+            //   (3) Successful transaction -> Show confirmation or thank you message
 
-        const orderData = await response.json();
-        // Three cases to handle:
-        //   (1) Recoverable INSTRUMENT_DECLINED -> call actions.restart()
-        //   (2) Other non-recoverable errors -> Show a failure message
-        //   (3) Successful transaction -> Show confirmation or thank you message
+            const errorDetail = orderData?.details?.[0];
 
-        const errorDetail = orderData?.details?.[0];
-
-        if (errorDetail?.issue === "INSTRUMENT_DECLINED") {
-          // (1) Recoverable INSTRUMENT_DECLINED -> call actions.restart()
-          // recoverable state, per
-          // https://developer.paypal.com/docs/checkout/standard/customize/handle-funding-failures/
-          return actions.restart();
-        } else if (errorDetail) {
-          // (2) Other non-recoverable errors -> Show a failure message
-          throw new Error(`${errorDetail.description} (${orderData.debug_id})`);
-        } else if (!orderData.purchase_units) {
-          throw new Error(JSON.stringify(orderData));
-        } else {
-          // (3) Successful transaction -> Show confirmation or thank you message
-          // Or go to another URL:  actions.redirect('thank_you.html');
-          const transaction =
-            orderData?.purchase_units?.[0]?.payments?.captures?.[0] ||
-            orderData?.purchase_units?.[0]?.payments?.authorizations?.[0];
-          resultMessage(
-            `Transaction ${transaction.status}: ${transaction.id}<br>
-          <br>See console for all available details`
-          );
-          console.log(
-            "Capture result",
-            orderData,
-            JSON.stringify(orderData, null, 2)
-          );
-          window.location.href = `../thankyou?plan=${plan}&ref=sr_8_2&_encoding=UTF8&content-id=2.log.16580615-fvd1"`;
-        }
+            if (errorDetail?.issue === "INSTRUMENT_DECLINED") {
+              // (1) Recoverable INSTRUMENT_DECLINED -> call actions.restart()
+              // recoverable state, per
+              // https://developer.paypal.com/docs/checkout/standard/customize/handle-funding-failures/
+              return actions.restart();
+            } 
+            if(orderData.status == 201) {
+              // (3) Successful transaction -> Show confirmation or thank you message
+              // Or go to another URL:  actions.redirect('thank_you.html');
+              history.pushState({}, 'Purchase Complete', `../thankyou?plan=${plan}&ref=sr_8_2&_encoding=UTF8&content-id=2.paySuccess.78890615-fvd1`);
+              document.title = "Purchase Complete";
+              let checkoutPage = document.getElementById("checkout-page");
+              checkoutPage.innerHTML = `
+          <div id="payment-confirmation-screen">
+            <h1><label><img src="../_static/success.png"> Purchase complete</label></h1>
+            <div id="confirm-details">
+                <p>Your payment is being processed and your account will be updated with the new plan, when the payment is confirmed. You may close this window now</p>
+            </div>
+            <div id="info-container" class="container-fluid row">
+                <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                    <div class="info-box-left">
+                        <label>Account details</label>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                    <div class="info-box-right" id="account-details">
+                        <p>Name: ${rname}</p>
+                        <p>Email: ${email}</p>
+                    </div>
+                </div>
+            </div>
+            <div id="info-container" class="container-fluid row">
+                <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                    <div class="info-box-left">
+                        <label>Plan details</label>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                    <div class="info-box-right" id="purchase-details">
+                        <p>Plan name: ${planName}</p>
+                        <p>Validity: 1 month</p>
+                        <p>Expires on: ${formattedDate}</p>
+                    </div>
+                </div>
+            </div>
+            <div id="info-container" class="container-fluid row">
+                <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                    <div class="info-box-left">
+                        <label>Payment details</label>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                    <div class="info-box-right" id="purchase-details">
+                        <p>Amount: <strong>$${price[plan]}</strong></p>
+                        <p>Status: Processing</p>
+                    </div>
+                </div>
+            </div>
+            <div id="confirm-timstamp">
+                <p>${currentTimestamp}</p>
+            </div>
+        </div>`
+            }
+          });
       } catch (error) {
         console.error(error);
-        resultMessage(
+        console.log(
           `Sorry, your transaction could not be processed...<br><br>${error}`
         );
       }
