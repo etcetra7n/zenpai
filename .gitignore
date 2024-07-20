@@ -14,5 +14,5 @@ build/
 dist/
 *.spec
 setup/*.exe
-public/release/*
+release/*
 
