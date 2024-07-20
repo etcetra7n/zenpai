@@ -61,6 +61,7 @@ exports.handler = async (event, context) => {
       body: JSON.stringify({ 
         "email": decodedToken.email,
         "uid": decodedToken.uid,
+        "name": decodedToken.name,
       }),
     };
   } catch (error) {

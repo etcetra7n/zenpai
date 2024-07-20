@@ -1,0 +1,102 @@
+body {
+    background-color: #ffffff;
+}
+#nav-designator label{
+    color: #B3B3B3;
+    font-size: 24px;
+}
+
+#header{
+    border-bottom: 1px solid #444C56;
+    background-color: #1C2128;
+}
+#header-logo{
+    width: 100%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+}
+#header-logo a label{
+    font-size: 35px;
+    margin-top: 16px;
+    margin-bottom: 17px;
+    padding: 0px;
+    width:114px;
+    height: 50px;
+    background: -webkit-gradient(linear, left top, right top, from(#C55B5B), to(#979797));
+    background: -o-linear-gradient(left, #C55B5B, #979797);
+    background: linear-gradient(to right, #C55B5B, #979797);
+    -webkit-background-clip: text;
+    color: transparent;
+    cursor: pointer;
+}
+#checkout-page-left{
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+}
+#checkout-width-controller{
+    width: 50%;
+}
+#info-container{
+    margin-top: 50px;
+}
+#nav-designator{
+    width: 500px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: left;
+        -ms-flex-pack: left;
+            justify-content: left;
+    -webkit-box-align: left;
+        -ms-flex-align: left;
+            align-items: left;
+}
+.info-box-left label{
+    color: #000000;
+    font-size: 19px;
+}
+.info-box-right p{
+    color: #777777;
+    height: 10px;
+}
+.checkout-title{
+    color: #A74A4A;
+    font-size: 24px;
+    margin-top: 30px;
+}
+
+#checkout-screen-container {
+    width: 100%;
+    text-align: center;
+    background-color: #ffffff;
+    border: 1px solid #747474;
+    border-radius: 8px;
+    color: #464646;
+    padding:50px 100px;
+    padding-top: 70px;
+    margin: auto;
+    margin-top: 8px;
+}
+
+@media only screen and (max-width: 800px) {
+    #checkout-width-controller{
+        width: 90%;
+    }
+    #checkout-screen-container {
+        padding:50px 50px;
+    }
+}

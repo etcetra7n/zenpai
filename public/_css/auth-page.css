@@ -42,7 +42,7 @@ body {
 }
 #google-sign-in-btn:hover {
     background-color: #EAEAEA;
-    border: 2px solid #8AB4F8;
+    outline: 2px solid #8AB4F8;
 }
 #google-sign-in-btn img{
     height: 58px;

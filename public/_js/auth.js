@@ -1,4 +1,5 @@
 import { app, logEvent, analytics } from "/_js/common.js";
+import { setCookie, getCookie } from "/_js/cookies.js"
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-auth.js";
 
 const auth = getAuth(app);
@@ -43,6 +44,9 @@ googleSignInBtn.addEventListener('click', async => {
       return userDetails;
 
     }).then((userDetails) => {
+      setCookie("uid", userDetails.uid, 7);
+      setCookie("email", userDetails.email, 7);
+      setCookie("name", userDetails.email, 7);
       if(redirect_url !== null){
         window.location.href = redirect_url;
       } else {
