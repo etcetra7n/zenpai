@@ -6,7 +6,7 @@ window.onload = function() {
         event.preventDefault();
         // these IDs from the previous steps
         let statusMsg = document.getElementById("status-msg");
-        statusMsg.innerHTML = '<label><img src="../_static/loading.gif"> Please wait</label>'
+        statusMsg.innerHTML = '<label><img src="../_static/loading.gif"> Please wait</label>';
         const msgParams = {
           "sender": document.getElementById("email-field").value,
           "message": document.getElementById("message-field").value

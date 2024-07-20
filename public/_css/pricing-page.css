@@ -93,6 +93,9 @@ body {
     top: 60px;
     left: 27%;
 }
+.pricing-button button label{
+    cursor: pointer;
+}
 @media only screen and (max-width: 900px) {
     #pricing-container{
         padding-right: 0px;

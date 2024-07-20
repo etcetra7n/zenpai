@@ -46,7 +46,7 @@ googleSignInBtn.addEventListener('click', async => {
     }).then((userDetails) => {
       setCookie("uid", userDetails.uid, 7);
       setCookie("email", userDetails.email, 7);
-      setCookie("name", userDetails.email, 7);
+      setCookie("name", userDetails.name, 7);
       if(redirect_url !== null){
         window.location.href = redirect_url;
       } else {
@@ -61,7 +61,7 @@ googleSignInBtn.addEventListener('click', async => {
           <img src="../_static/success.png"> You are now logged in as ${userDetails.email}
           `;
         } else {
-          window.location.href = "https://zenpai.pro/pricing";
+          window.location.href = "../pricing?ref=sr_3_1&_encoding=UTF8&content-id=5.sym.17580515-fbf2";
         }
       }
     })

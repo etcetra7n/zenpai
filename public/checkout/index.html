@@ -19,7 +19,6 @@
 
     <link rel="stylesheet" href="../_css/common.css">
     <link rel="stylesheet" href="../_css/checkout-page.css">
-    <script type="module" src="../_js/checkout.js"></script>
     <link rel="icon" type="image/png" href="../favicon.ico" sizes="128x128">
     
 </head>
@@ -71,54 +70,17 @@
                     </div>
                     <label class="checkout-title">Select a payment method</label>
                     <div id="checkout-screen-container">
-                        <script src="https://www.paypal.com/sdk/js?client-id=BAACu88cdfI1Dj2UbmgIHnWGKYJwcmobtaZ-Qc4NkrSxaH3bZe0TZn7nwcLN_RDqjvv125srLSUzM__5fs&components=hosted-buttons&disable-funding=venmo&currency=USD"></script>
-                        <div id="paypal-container-Q59SAGWRKZMYN"></div>
-                        <script>
-                          paypal.HostedButtons({
-                            hostedButtonId: "Q59SAGWRKZMYN",
-                          }).render("#paypal-container-Q59SAGWRKZMYN")
-                        </script>
-                        <label id="status-msg"></label>
-                        <!--<label id="status-msg"><img src="../_static/loading.gif"> Waiting for confirmation<label>-->
-                        <!--<label id="status-msg"><img src="../_static/success.png"> You are now logged in as ${userDetails.email}<label>-->
+                        <div id="paypal-button-container"></div>
+                        <script src="https://www.paypal.com/sdk/js?client-id=AZ-K0LRTSdV6F7Nqj0h9_CryYlgmSkeo7CdiCQJQp-iQN9B_bN0UqGs3kUW94VO1jp-mMrBQHS_I_fDL&buyer-country=US&currency=USD&components=buttons&enable-funding=venmo"></script>
                     </div>
+                    <div id="status-msg"> </div>
+                    <script type="module" src="../_js/checkout.js"></script>
                 </div>
             </div>
         </div>
         <div id="empty-reg" class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 my-auto mx-auto">
         </div>
 
-    </div>
-    <div id="footer">
-        <div id="container-fluid">
-            <div class="row" id="footer-main-row">
-                <div id="footer-logo" class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 my-auto mx-auto">
-                    <label class="zenpai-text-gradient">Zenpai<label>
-                </div>
-                <div id="footer-links-div" class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 ">
-                    <ul>
-                        <li><a class="footer-links" href="/contact">How can we improve? Leave a feedback/suggestion</a></li>
-                        <li><a class="footer-links" href="/privacy">Privacy Policy</a></li>
-                        <li><a class="footer-links" href="/login">Sign up/sign in</a></li>
-                    </ul>
-                </div>
-                <div id="newsletter" class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-                    <label class="zenpai-text-gradient" id="newsletter-label">Newsletter</label>
-                    <div class="form-group">
-                        <input type="email" id="email-field" name="email" placeholder="john.doe@example.com" required>
-                        <br>
-                        <button id="newsletter-signup-btn" type="submit" class="btn btn-primary">
-                            <img src="../_static/send-icon.png" alt="submit icon">
-                            <label>Submit</label>
-                        </button>
-                        <label id="newsletter-decl-label">We won't spam. Ever.</label>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div id="bottom-copyright">
-            <label>© 2024 Copyright: <a href="#">zenpai.pro</a></label>
-        </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 </body>
