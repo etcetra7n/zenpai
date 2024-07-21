@@ -7,6 +7,9 @@ if (!admin.apps.length) {
   });
 }
 const db = admin.firestore();
+
+/*PAYPAL_CLIENT_ID;
+PAYPAL_CLIENT_SECRET;*/
 /*
 const price = {
  'versatile': 8,

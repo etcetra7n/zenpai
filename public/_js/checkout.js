@@ -42,10 +42,10 @@ purchaseDetails.innerHTML = `
 `;
 
 const price = {
- 'versatile': '0.4',
- 'effective': '0.5'
+ 'versatile': '6.00',
+ 'effective': '9.00'
 };
-totalAmout.innerHTML = `<p><strong>$${price[plan]}</strong></p>`;
+totalAmout.innerHTML = `<p><s>$${Number(price[plan])+2.00}.00</s> <strong> $${price[plan]}</strong> (July launch offer)</p>`;
 window.paypal
   .Buttons({
     style: {
