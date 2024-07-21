@@ -8,7 +8,7 @@ window.onload = function() {
         let statusMsg = document.getElementById("status-msg");
         statusMsg.innerHTML = '<label><img src="../_static/loading.gif"> Please wait</label>';
         const msgParams = {
-          "sender": document.getElementById("email-field").value,
+          "sender": document.getElementById("sender-email").value,
           "message": document.getElementById("message-field").value
         }
         emailjs.send('service_ypn4mwg', 'template_ln88zmi', msgParams)

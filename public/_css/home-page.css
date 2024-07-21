@@ -1,10 +1,12 @@
 body {
     background-color: #22272E;
 }
+
 #first-sec-left {
     padding-top: 90px;
 }
 #first-sec-right h3{
+    text-align: center;
     padding-top: 70px;
     padding-bottom: 15px;
     font-size: 30px;
@@ -15,8 +17,9 @@ body {
 }
 
 #first-sec-heading{
+    width: 350px;
+    text-align: center;
     font-size: 110px;
-    width: 324px;
 }
 #heading-tags{
     color: #8D96A0;
@@ -24,11 +27,18 @@ body {
     text-align: center;
 }
 #first-sec-downloads {
+    padding: 0;
+    margin: 0;
     padding-top: 100px;
     text-align: center;
 }
+#mac-download{
+    cursor:not-allowed;
+}
 #second-sec {
     width: 100%;
+    margin: 0;
+    padding: 0;
     margin-top: 50px;
     background-color: #121212;
 }
@@ -78,8 +88,8 @@ body {
 }
 #feature-sec-left p span{
     color: #7E7E7E;
-    background: -webkit-gradient(linear, left top, right top, from(#C55B5B), to(#979797));
     background: -o-linear-gradient(left, #C55B5B, #979797);
+    background: -webkit-gradient(linear, left top, right top, from(#C55B5B), to(#979797));
     background: linear-gradient(to right, #C55B5B, #979797);
     -webkit-background-clip: text;
     color: transparent;
@@ -99,6 +109,8 @@ body {
 
 #third-sec {
     width: 100%;
+    margin: 0;
+    padding: 0;
     margin-top: 50px;
     background-color: #121212;
 }
@@ -147,6 +159,10 @@ body {
 }
 
 @media only screen and (max-width: 900px) {
+    #first-sec{
+        padding: 0;
+        margin: 0;
+    }
     #first-sec-heading{
         font-size: 60px;
         width: 178px;
@@ -156,6 +172,9 @@ body {
     }
     #heading-tags label {
         width: 100%;
+    }
+    .download-btn-img{
+        width: 180px;
     }
     #first-sec-right {
         text-align: center;
@@ -169,10 +188,14 @@ body {
         height: 260px;
     }
     #second-sec-left{
+        text-align: center;
+        padding-right: 0px;
+    }
+    #second-sec-left{
         padding-right: 0px;
     }
     #second-sec-left img{
-        width: 100%;
+        width: 330px;
         height: 260px;
         -webkit-transform: translateY(-72px);
         -ms-transform: translateY(-72px);
@@ -207,11 +230,19 @@ body {
     }
     .feature-item img{
         height: 30px;
-        width: 30px;    
+        width: 30px;
+    }
+    .fea-img-cont{
+        text-align: center;
+        margin: 0;
+        padding: 0;
     }
     .feature-imgs{
-        width: 100%;
-        height: 160px;
+        width: 400px;
+        height: 200px;
+    }
+    #third-sec-left{
+        text-align: center;
     }
     #third-sec-left{
         font-size: 29px;
@@ -224,7 +255,7 @@ body {
         text-align: center;
     }
     #third-sec-right img{
-        width: 100%;
+        width: 330px;
         height: 260px;
         -webkit-transform: translateY(70px);
         -ms-transform: translateY(70px);
@@ -234,4 +265,11 @@ body {
         margin: auto;
         width:80%;
     }
+}
+@media only screen and (max-width: 450px) {
+    .feature-imgs{
+        width: 320px;
+        height: 150px;
+    }
+
 }

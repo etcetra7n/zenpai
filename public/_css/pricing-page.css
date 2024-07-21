@@ -37,8 +37,9 @@ body {
     font-size: 24px;
 }
 #pricing-container{
+    width: 80%;
+    padding: 0;
     padding-top: 40px;
-    padding-left: 0px;
 }
 .pricing-box{
     height: 420px;
@@ -91,7 +92,7 @@ body {
     font-size: 19px;
     position: relative;
     top: 60px;
-    left: 27%;
+    left: 9px;
 }
 .pricing-button button label{
     cursor: pointer;
@@ -100,11 +101,6 @@ body {
     #pricing-container{
         padding-right: 0px;
     }
-    .pricing-box{
-        -webkit-transform: translateX(10px);
-            -ms-transform: translateX(10px);
-                transform: translateX(10px);
-    }
     .pricing-box-layout{
         padding-bottom: 40px;
     }
@@ -112,21 +108,25 @@ body {
         bottom: 70px;
     }
 }
-@media only screen and (max-width: 600px) {
-    .pricing-box{
-        width: 85%;
-        height: 400px;
-        padding-right: 8px;
-    }
-    .pricing-feature{
-        font-size: 17px;
-        text-align: left;
+@media only screen and (max-width: 1500px) {
+    #pricing-container{
+        width: 100%;
     }
     .pricing-button button{
         text-align: center;
         font-size: 18px;
         position: relative;
-        top: 45px;
-        left: 26%;
+        top: 80px;
+    }
+}
+@media only screen and (max-width: 600px) {
+    .pricing-box{
+        width: 85%;
+        height: 430px;
+        padding-right: 8px;
+    }
+    .pricing-feature{
+        font-size: 17px;
+        text-align: left;
     }
 }
