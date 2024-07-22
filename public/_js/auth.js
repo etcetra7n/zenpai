@@ -9,6 +9,7 @@ const params = new Proxy(new URLSearchParams(window.location.search), {
 });
 const tempId = params.tempId; // "some value, perhaps undefined"
 const redirect_url = params.then;
+const purchase_action = params.purchaseAction;
 
 async function sendUserIdToBackend(userIdToken, tempId) {
   try{
@@ -47,22 +48,24 @@ googleSignInBtn.addEventListener('click', async => {
       setCookie("uid", userDetails.uid, 7);
       setCookie("email", userDetails.email, 7);
       setCookie("name", userDetails.name, 7);
+      if (purchase_action !== null){
+        window.location.href = `../checkout?plan=${purchase_action}&ref=xv_7_1&_encoding=UTF8&content-id=0.sym.88650515-fbf7`;
+      }
       if(redirect_url !== null){
         window.location.href = redirect_url;
-      } else {
-        if (tempId !== null){
-          let googleSignInBtn = document.getElementById("google-sign-in-btn");
-          if (googleSignInBtn !== null){
-            googleSignInBtn.remove();
-          }
-          let statusMsg = document.getElementById("status-msg");
-          statusMsg.innerHTML = 
-          `
-          <img src="../_static/success.png"> You are now logged in as ${userDetails.email}
-          `;
-        } else {
-          window.location.href = "../pricing?ref=sr_3_1&_encoding=UTF8&content-id=5.sym.17580515-fbf2";
+      } 
+      if (tempId !== null){
+        let googleSignInBtn = document.getElementById("google-sign-in-btn");
+        if (googleSignInBtn !== null){
+          googleSignInBtn.remove();
         }
+        let statusMsg = document.getElementById("status-msg");
+        statusMsg.innerHTML = 
+        `
+        <img src="../_static/success.png"> You are now logged in as ${userDetails.email}
+        `;
+      } else {
+        window.location.href = "../pricing?ref=xc_3_1&_encoding=UTF8&content-id=5.sym.17580515-fbf2";
       }
     })
     .catch((error) => {

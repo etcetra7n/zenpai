@@ -8,6 +8,7 @@ from PySide6.QtWidgets import (
     QWidget,
     QPushButton,
 )
+from __version__ import *
 from titlebar import CustomTitleBar
 from sys import argv
 from sys import exit as sys_exit
@@ -170,7 +171,7 @@ class AuthWindow(QMainWindow):
             ''')
         work_space_layout.addWidget(self.bottom_label)
 
-        self.bottom_version = QLabel("v1.1.2")
+        self.bottom_version = QLabel(ZENPAI_VERSION)
         self.bottom_version.setAlignment(Qt.AlignmentFlag.AlignLeft)
         self.bottom_version.setStyleSheet(
             '''QLabel {

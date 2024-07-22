@@ -242,7 +242,7 @@ class MainWindow(QMainWindow):
                 margin-left: 460px;
                 margin-top:10px;
                 border-style: outset;
-                border-radius: 10px;
+                border-radius: 8px;
                 padding: 7px 15px 7px 19px;
                }
                

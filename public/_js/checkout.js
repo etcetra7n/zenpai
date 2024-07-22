@@ -9,11 +9,15 @@ const uid = getCookie("uid");
 const email = getCookie("email");
 const rname = getCookie("name");
 
-if ((uid==null)||(uid=="")){
-  window.location.href = "../login?ref=sr_1_1&_encoding=UTF8&content-id=1.sym.16580515-fbf7";
+const no_uid = (uid==null)||(uid=="");
+if (no_uid&&(plan==null)){
+  window.location.href = "../login?ref=xn_1_1&_encoding=UTF8&content-id=1.sym.16580515-fbf7";
+}
+if (no_uid&&(plan!=null)){
+  window.location.href = `../login?purchaseAction=${plan}&ref=xc_1_1&_encoding=UTF8&content-id=1.sym.16580515-fbf7`;
 }
 if (plan==null){
-  window.location.href = "../pricing?ref=sr_1_2&_encoding=UTF8&content-id=2.sym.16580615-fbf7";
+  window.location.href = "../pricing?ref=xv_1_2&_encoding=UTF8&content-id=2.sym.16580615-fbf7";
 }
 const planName = plan.charAt(0).toUpperCase() + plan.slice(1);
 let currentTimestamp = new Date()

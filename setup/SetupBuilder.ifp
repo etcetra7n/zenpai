@@ -3,7 +3,7 @@
 ProjectFileVersion = 1.1
 [General]
 Program name = Zenpai Assistant
-Program version = v1.2.2.beta
+Program version = v1.1.2
 Windows XP = 0
 Windows Server 2003 = 1
 Windows Vista = 1
@@ -27,7 +27,7 @@ Header image = D:\zenpai\assets\icon-256.png
 Show Label = 1
 VisualStylesEnabled = 1
 [Files]
-Installation path = <ProgramFiles>\Zenpai\
+Installation path = <ProgramFilesX64>\Zenpai\
 Autcip = 1
 [Uninstall]
 Vwau = 0
@@ -61,7 +61,7 @@ File = D:\zenpai\setup\ZenpaiAssistantSetup.exe
 SetupIconPath = D:\zenpai\assets\icon-64.ico
 UninstallIconPath = D:\zenpai\assets\icon-64.ico
 CompressionMethod = 0
-CompressionLevel = 0
+CompressionLevel = 2
 [Updater]
 Allow = 0
 1 = <AppName>
@@ -84,6 +84,9 @@ N/A
 [Folder]
 D:\zenpai\dist\zenpai\zenpai.exe
 2.2 MB
+exe
+D:\zenpai\dist\zenpai\singleinstance.exe
+107.8 KB
 exe
 [Licence_Begin]
 7223
@@ -147,7 +150,7 @@ Icon
 HKEY_CLASSES_ROOT
 *\shell\zenpai\command
 
-"<InstallPath>\zenpai.exe" "%1"
+"<InstallPath>\singleinstance.exe" "%1" "<InstallPath>\zenpai.exe" "$files" --si-timeout 300
 1
 [Variables]
 [SCs]

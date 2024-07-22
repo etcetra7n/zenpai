@@ -72,7 +72,7 @@ def generate_script(instruction, selected_files):
         print("You are not signed in.")
         return(1)
 
-    response = post('http://localhost:8888/.netlify/functions/generateScript', json=request)
+    response = post('https://zenpai.netlify.app/.netlify/functions/generateScript', json=request)
     response.raise_for_status()
 
     script = response.json()['py_script']
