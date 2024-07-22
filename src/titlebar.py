@@ -39,16 +39,14 @@ class CustomTitleBar(QWidget):
         # Min button
         self.min_button = QToolButton(self)
         min_icon = QIcon(os_path.join(basedir, "assets", "min.svg"))
-        #min_icon.addFile()
         self.min_button.setIcon(min_icon)
         self.min_button.clicked.connect(self.window().showMinimized)
 
         # Max button
         self.max_button = QToolButton(self)
         max_icon = QIcon(os_path.join(basedir, "assets", "max.svg"))
-        #max_icon.addFile()
         self.max_button.setIcon(max_icon)
-        self.max_button.clicked.connect(self.window().showMaximized)
+        #self.max_button.clicked.connect(self.window().showMaximized)
 
         # Close button
         self.close_button = QToolButton(self)
@@ -85,16 +83,23 @@ class CustomTitleBar(QWidget):
                 """
             )
             title_bar_layout.addWidget(button)
-            self.close_button.setStyleSheet(
-                """ QToolButton {
-                     border: none;
-                     padding: 16px;
-                    }
-                    QToolButton:hover {
-                     background: #c92828;
-                    }
-                """
-            )
+        self.close_button.setStyleSheet(
+            """ QToolButton {
+                 border: none;
+                 padding: 16px;
+                }
+                QToolButton:hover {
+                 background: #c92828;
+                }
+            """
+        )
+        self.max_button.setStyleSheet(
+            """ QToolButton {
+                 border: none;
+                 padding: 16px;
+                }
+            """
+        )
     def window_state_changed(self, state):
         if state == Qt.WindowState.WindowMaximized:
             self.normal_button.setVisible(True)

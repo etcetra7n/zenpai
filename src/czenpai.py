@@ -15,28 +15,20 @@ if not os.path.exists(appdata_path):
 python_path = os.path.join(basedir, "py-3.11.9-64", "python.exe")
 pipcheck_path = os.path.join(appdata_path, "_pipCheck.py")
 script_file = os.path.join(appdata_path, "_tempScript.py")
-ffmpeg_path = os.path.join(basedir, "utils", "ffmpeg.exe").replace(os.sep, "/")
+ffmpeg_path = os.path.join(basedir, "utils").replace(os.sep, "/")
+
+os.environ["PATH"] += os.pathsep + ffmpeg_path
 
 class ScriptError(Exception):
-    def __init__(self, message):
-        self.message = "Error running script"
-
-def add_ffmpeg_path(script):
-    pattern = re.compile("([\"'])(.*)(ffmpeg)(.*)([\"'])")
-    replacement = f'\'\\2"{ffmpeg_path}"\\4\''
-    script = re.sub(pattern, replacement, script)
-    return(script)
+    def __init__(self, message="error running script"):
+        self.message = message
 
 def script_precheck(script):
-    script = add_ffmpeg_path(script)
     return(script)
 
 def package_exists(pkg):
-    pip_check_base = '''def package_exists(pkg):
-    exec('import '+pkg)
-'''
     with open(pipcheck_path, 'w') as f:
-        f.write(pip_check_base+f"\npackage_exists('{pkg}')")
+        f.write(f"import {pkg}")
     try:
         run([python_path, pipcheck_path], stdout=DEVNULL, stderr=DEVNULL, creationflags=CREATE_NO_WINDOW)
         del_file(pipcheck_path)
@@ -58,13 +50,17 @@ def install_required_packages(code):
             match = re.search(import_pattern, line)
             if match:
                 required_packages.append(match.group(1))
+
     for pkg in required_packages:
         if not(package_exists(pkg)):
-            run([python_path, "-m", "pip", "install", pkg], stdout=DEVNULL, stderr=DEVNULL, creationflags=CREATE_NO_WINDOW)
-
+            result = run([python_path, "-m", "pip", "install", pkg], capture_output=True, creationflags=CREATE_NO_WINDOW)
+            if (result.returncode != 0):
+                print(result)
+                raise ScriptError("module cannot be downloaded")
 def generate_script(instruction, selected_files):
     request = {"file_num": len(selected_files),
-              "instruction": instruction
+              "instruction": instruction,
+              "file_type":selected_files[0].split('.')[-1],
         }
     selected_files = [f.replace(os.sep, "/") for f in selected_files]
     auth_file = os.path.join(appdata_path, "zenpai.auth")
@@ -76,7 +72,7 @@ def generate_script(instruction, selected_files):
         print("You are not signed in.")
         return(1)
 
-    response = post('https://zenpai.netlify.app/.netlify/functions/generateScript', json=request)
+    response = post('http://localhost:8888/.netlify/functions/generateScript', json=request)
     response.raise_for_status()
 
     script = response.json()['py_script']
@@ -93,6 +89,7 @@ def generate_script(instruction, selected_files):
     result=run([python_path, script_file], capture_output=True, creationflags=CREATE_NO_WINDOW)
     del_file(script_file)
     if(result.returncode != 0):
+        print(result)
         raise ScriptError("error running script")
     return(0)
 

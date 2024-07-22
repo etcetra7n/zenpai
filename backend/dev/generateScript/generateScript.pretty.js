@@ -38,12 +38,13 @@ async function getLastHourRequests(user_id){
   }
 }
 
-async function logInstruction(instruction, user_id, file_num, script) {
+async function logInstruction(instruction, user_id, file_num, file_type, script) {
     try{
         await db.collection('instruct_log').add({
           "instruction": instruction,
           "uid": user_id,
           "file_num": file_num,
+          "file_type": file_type,
           "result": script,
           "timestamp": admin.firestore.FieldValue.serverTimestamp(),
         });
@@ -53,11 +54,11 @@ async function logInstruction(instruction, user_id, file_num, script) {
     }
 }
 
-async function generateScript(instruction, file_num) {
+async function generateScript(instruction, file_num, file_type) {
     const groq = new Groq();
     let prompt = "";
     if (file_num == 1) {
-        prompt = `You are given a txt file, write a python function called 'operation' which takes the file path as argument and "${instruction}". Save the result in a new file. Don't include any other details`
+        prompt = `You are given a ${file_type} file, write a python function called 'operation' which takes the file path as argument and "${instruction}". Save the result in a new file. Don't include any other details`
     } else {
         prompt = `You are given a list of files, write a python function called 'operation' which takes the list of file path as argument and "${instruction}". Save the result in new files. Don't include any other details`
     }
@@ -133,7 +134,7 @@ exports.handler = async (event, context) => {
       };
     }
   }*/
-  let result = await generateScript(data.instruction, data.file_num);
+  let result = await generateScript(data.instruction, data.file_num, data.file_type);
   let script = result.split("```")[1];
   if (script.startsWith('python') || script.startsWith('Python')){
     script = script.substring(7);
@@ -141,7 +142,7 @@ exports.handler = async (event, context) => {
   if (script.startsWith(' ')) {
     script = script.substring(1);
   }
- await logInstruction(data.instruction, data.uid, data.file_num, script);
+ await logInstruction(data.instruction, data.uid, data.file_num, data.file_type, script);
   return {
     statusCode: 200,
     body: JSON.stringify({ "py_script": script }),

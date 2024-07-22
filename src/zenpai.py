@@ -208,7 +208,7 @@ class MainWindow(QMainWindow):
         self.status_success.setIcon(success_icon)
         self.status_success.setVisible(False)
 
-        self.status_failure = QPushButton(" Oops, that did't work", btn_row)
+        self.status_failure = QPushButton(" That did't work. Please try again", btn_row)
         self.status_failure.setStyleSheet(
             '''QPushButton {
                 font-size: 12pt; 
@@ -243,7 +243,7 @@ class MainWindow(QMainWindow):
                 margin-top:10px;
                 border-style: outset;
                 border-radius: 10px;
-                padding: 6px 14px 8px 20px;
+                padding: 7px 15px 7px 19px;
                }
                
                QPushButton:hover {
