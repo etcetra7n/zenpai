@@ -88,7 +88,7 @@ async function generateScript(instruction, file_num, file_type) {
 }
 
 exports.handler = async (event, context) => {
-  if (event.httpMethod !== 'POST') {
+  if ((event.httpMethod!=='POST')||(event.httpMethod!=='GET')||(event.httpMethod!=='OPTIONS')){
     return {
       statusCode: 405,
       body: 'Method Not Allowed',
@@ -142,7 +142,7 @@ exports.handler = async (event, context) => {
   if (script.startsWith(' ')) {
     script = script.substring(1);
   }
- //await logInstruction(data.instruction, data.uid, data.file_num, data.file_type, script);
+ await logInstruction(data.instruction, data.uid, data.file_num, data.file_type, script);
   return {
     statusCode: 200,
     body: JSON.stringify({ "py_script": script }),
