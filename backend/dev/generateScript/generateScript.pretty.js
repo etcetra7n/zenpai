@@ -88,12 +88,13 @@ async function generateScript(instruction, file_num, file_type) {
 }
 
 exports.handler = async (event, context) => {
-  if ((event.httpMethod!=='POST')||(event.httpMethod!=='GET')||(event.httpMethod!=='OPTIONS')){
+  /*
+  if (!((event.httpMethod=='POST')||(event.httpMethod=='GET')||(event.httpMethod=='OPTIONS'))){
     return {
       statusCode: 405,
       body: 'Method Not Allowed',
     };
-  }
+  }*/
   const data = JSON.parse(event.body);
   /*
   let plan="free";
