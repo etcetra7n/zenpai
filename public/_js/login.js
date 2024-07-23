@@ -1,4 +1,4 @@
-import { app, logEvent, analytics } from "/_js/common.js";
+import { app, logEvent, analytics } from "/_js/firebase-init.js";
 import { setCookie, getCookie } from "/_js/cookies.js"
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-auth.js";
 
@@ -34,8 +34,12 @@ let googleSignInBtn = document.getElementById('google-sign-in-btn');
 googleSignInBtn.addEventListener('click', async => {
   const provider = new GoogleAuthProvider();
   googleSignInBtn.remove();
-  let statusMsg = document.getElementById("status-msg");
-  statusMsg.innerHTML = `<img src="../_static/loading.gif"> Please wait...`;
+  let statusMsg = document.getElementById("status-container");
+  let bottomLabel = document.getElementById("bottom-label");
+  statusMsg.innerHTML = `<img id="status-img" width="50" src="../_static/loading.gif"><br>
+    <label id="status-msg">Please wait...<label>`;
+  bottomLabel.style.marginTop = '140px';
+  
   signInWithPopup(auth, provider)
     .then(async(result) => {
       //const credential = GoogleAuthProvider.credentialFromResult(result);
@@ -59,11 +63,13 @@ googleSignInBtn.addEventListener('click', async => {
         if (googleSignInBtn !== null){
           googleSignInBtn.remove();
         }
-        let statusMsg = document.getElementById("status-msg");
-        statusMsg.innerHTML = 
-        `
-        <img src="../_static/success.png"> You are now logged in as ${userDetails.email}
+        let statusMsg = document.getElementById("status-container");
+        let bottomLabel = document.getElementById("bottom-label");
+        statusMsg.innerHTML = `
+        <img id="status-img" width="60" src="../_static/success.png"><br>
+        <label id="status-msg">You are now logged in as ${userDetails.email}<br>You may close this window</label>
         `;
+        bottomLabel.style.marginTop = '105px';
       } else {
         window.location.href = "../pricing?ref=xc_3_1&_encoding=UTF8&content-id=5.sym.17580515-fbf2";
       }
