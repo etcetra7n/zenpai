@@ -29,14 +29,14 @@ async function sendUserIdToBackend(userIdToken, tempId) {
     logEvent(analytics, 'crash', { name: 'send_user_id_to_backend'});
   }
 }
-let googleSignInBtn = document.getElementById('google-sign-in-btn');
 
+let googleSignInBtn = document.getElementById('google-sign-in-btn');
 googleSignInBtn.addEventListener('click', async => {
   const provider = new GoogleAuthProvider();
-  googleSignInBtn.remove();
-  let statusMsg = document.getElementById("status-container");
+  let replaceContainer = document.getElementById("replace-container");
   let bottomLabel = document.getElementById("bottom-label");
-  statusMsg.innerHTML = `<img id="status-img" width="50" src="../_static/loading.gif"><br>
+  replaceContainer.innerHTML = `
+    <img id="status-img" width="50" height="50" src="../_static/loading.gif"><br>
     <label id="status-msg">Please wait...<label>`;
   bottomLabel.style.marginTop = '140px';
   
@@ -59,17 +59,13 @@ googleSignInBtn.addEventListener('click', async => {
         window.location.href = redirect_url;
       } 
       if (tempId !== null){
-        let googleSignInBtn = document.getElementById("google-sign-in-btn");
-        if (googleSignInBtn !== null){
-          googleSignInBtn.remove();
-        }
-        let statusMsg = document.getElementById("status-container");
+        let replaceContainer = document.getElementById("replace-container");
         let bottomLabel = document.getElementById("bottom-label");
-        statusMsg.innerHTML = `
+        replaceContainer.innerHTML = `
         <img id="status-img" width="60" src="../_static/success.png"><br>
         <label id="status-msg">You are now logged in as ${userDetails.email}<br>You may close this window</label>
         `;
-        bottomLabel.style.marginTop = '105px';
+        bottomLabel.style.marginTop = '106px';
       } else {
         window.location.href = "../pricing?ref=xc_3_1&_encoding=UTF8&content-id=5.sym.17580515-fbf2";
       }
