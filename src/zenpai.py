@@ -81,7 +81,7 @@ class MainWindow(QMainWindow):
                 margin-top:10px;
                 color: qlineargradient(x1: 0, y1: 0, x2: 500, y2: 0,
                                  stop: 0.0 #979797, stop: 0.4 #C55B5B
-                                 stop: 0.4 #C55B5B, stop: 1.0 #979797);    
+                                 stop: 0.4 #C55B5B, stop: 1.0 #979797);
                }
             ''')
         work_space_layout.addWidget(color_title)
