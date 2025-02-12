@@ -16,3 +16,5 @@ dist/
 setup/*.exe
 release/*
 
+**/*.pfx
+setup/sign.bat

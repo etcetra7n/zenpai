@@ -15,15 +15,15 @@ Windows Server 2016 = 1
 Windows Server 2019 = 1
 Windows Server 2022 = 1
 Windows 11 = 1
-DoNotCheckOS = 0
+DoNotCheckOS = 1
 Company name = Zenpai
 Website = https://zenpai.pro
 SFA = 0
 DFA = 0
 Comp = 1
 [Graphics]
-Wizard image = D:\zenpai\assets\installer-wizard.png
-Header image = D:\zenpai\assets\icon-256.png
+Wizard image = C:\Program Files (x86)\solicus\InstallForge\images\Wizard_2.bmp
+Header image = C:\Program Files (x86)\solicus\InstallForge\images\Header_2.bmp
 Show Label = 1
 VisualStylesEnabled = 1
 [Files]
@@ -57,11 +57,11 @@ Time = 2
 PlaySound = 0
 Allow = 0
 [Build]
-File = D:\zenpai\setup\ZenpaiAssistantSetup.exe
-SetupIconPath = D:\zenpai\assets\icon-64.ico
-UninstallIconPath = D:\zenpai\assets\icon-64.ico
+File = G:\zenpai\setup\ZenpaiInstaller-v1.1.2.exe
+SetupIconPath = G:\zenpai\assets\icon-64.ico
+UninstallIconPath = G:\zenpai\assets\icon-64.ico
 CompressionMethod = 0
-CompressionLevel = 0
+CompressionLevel = 2
 [Updater]
 Allow = 0
 1 = <AppName>
@@ -76,18 +76,18 @@ RunProgs = 0
 Execdlls = 0
 [Languages]
 [Files/Dirs]
-D:\zenpai\setup\license.txt
+G:\zenpai\dist\zenpai\license.txt
 6.6 KB
 txt
-D:\zenpai\dist\zenpai\_internal\
-N/A
-[Folder]
-D:\zenpai\dist\zenpai\zenpai.exe
-2.2 MB
-exe
-D:\zenpai\dist\zenpai\singleinstance.exe
+G:\zenpai\dist\zenpai\singleinstance.exe
 107.8 KB
 exe
+G:\zenpai\dist\zenpai\zenpai.exe
+2.4 MB
+exe
+G:\zenpai\dist\zenpai\_internal\
+N/A
+[Folder]
 [Licence_Begin]
 7223
 {\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang1033{\fonttbl{\f0\fnil Arial;}}
@@ -150,7 +150,7 @@ Icon
 HKEY_CLASSES_ROOT
 *\shell\zenpai\command
 
-"<InstallPath>\singleinstance.exe" "%1" "<InstallPath>\zenpai.exe" "$files" --si-timeout 300
+"<InstallPath>\singleinstance.exe" "%1" "<InstallPath>\zenpai.exe" "$files" --si-timeout 200
 1
 [Variables]
 [SCs]
