@@ -1,0 +1,125 @@
+body {
+    background-color: #22272E;
+}
+#contact-header{
+    width: 40%;
+    margin: auto;
+    margin-top:70px;
+    text-align: center;
+}
+#contact-header h1{
+    color: #CECECE;
+}
+#contact-header p{
+    color: #888888;
+}
+.form-box{
+    width: 600px;
+    margin: auto;
+    text-align: center;
+    padding-top: 16px;
+}
+#contact-form{
+    text-align: center;
+    padding-top: 16px;
+}
+.contact-label{
+    color: #CCCCCC;
+}
+.contact-input{
+    width: 600px;
+    background-color: #191E25;
+    border: 1px solid #686868;
+    border-radius: 14px;
+    margin-top: 30px;
+    padding: 16px 25px;
+    font-size: 17px;
+    color: #ADADAD;
+}
+#message-field{
+    height: 220px;
+    padding: 25px 25px;
+}
+#submit-btn-layout{
+    text-align: right;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    text-align: right;
+    -webkit-box-pack: right;
+    -ms-flex-pack: right;
+    justify-content: right;
+}
+#status-msg {
+    text-align: left;
+    margin-top: 32px;
+    padding-left: 30px;
+    color: #ADBAC7;
+}
+#status-msg img{
+    height: 30px;
+    width: 30px;
+    margin-right: 10px;
+}
+#status-msg label{
+    margin-top: 7px;
+}
+#contact-form-btn{
+    font-size: 16px;
+    margin-top: 32px;
+    background-color: #C55B5B;
+    padding: 7px 20px 5px 21px;
+    color: #E3E3E3;
+    border: none;
+    border-radius: 7px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    cursor: pointer;
+}
+#contact-form-btn label{
+    cursor: pointer;
+}
+#contact-form-btn img{
+    height: 25px;
+    width: 28px;
+    padding-bottom: 6px;
+    padding-top: 4px;
+    padding-right: 8px;
+}
+#contact-design img{
+    height: 850px;
+}
+#footer{
+    margin-top: 0px;
+}
+@media only screen and (max-width: 900px) {
+    #contact-design{
+        display: none;
+    }
+    #contact-header{
+        width: 90%;
+    }
+    .contact-input{
+        width: 90%;
+    }
+    .form-box{
+        width: 100%;
+    }
+    #footer{
+        margin-top: 80px;
+    }
+    #btn-row{
+        width: 100%;
+        text-align: center;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+    }
+    #contact-form-btn{
+        margin-right: 0px;
+    }
+}

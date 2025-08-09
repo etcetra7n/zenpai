@@ -1,0 +1,138 @@
+body {
+    background-color: #22272E;
+}
+#pricing-sec{
+    padding-top: 120px;
+}
+#pricing-heading{
+    width: 100%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+}
+#pricing-heading h3{
+    font-size: 60px;
+}
+#pricing-label label{
+    width: 100%;
+    padding-top: 50px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+}
+#pricing-label label{
+    color: #C3C3C3;
+    font-size: 24px;
+}
+#pricing-container{
+    width: 80%;
+    padding: 0;
+    padding-top: 40px;
+}
+.pricing-box-layout{
+    padding: 0px;
+    margin: 0;
+}
+.pricing-box{
+    height: 420px;
+    width: 370px;
+    margin:0;
+    padding: 0;
+    margin:auto;
+    border: 1px solid #686868;
+    border-radius: 30px;
+    padding-top: 14px;
+}
+.plan-name{
+    color: #C3C3C3;
+    font-size: 30px;
+    text-align: center;
+    padding-top: 30px;
+}
+.price-tag{
+    color: #ffffff;
+    font-size: 26px;
+    text-align: center;
+    margin-bottom: 28px;
+}
+.pricing-dollar-sign{
+    color: #888888;
+    font-size: 16px;
+}
+.pricing-usd{
+    color: #888888;
+    font-size: 15px;
+}
+.pricing-feature{
+    color: #ffffff;
+    font-size: 21px;
+    padding-left: 50px;
+    padding-bottom: 16px;
+}
+.pricing-feature label{
+    padding-left: 8px;
+}
+.price-btn-row{
+    width: 100%;
+}
+.pricing-button button{
+    background-color: #C55B5B;
+    font-size: 15px;
+    color: #E3E3E3;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 25px 9px 25px;
+    text-align: center;
+    font-size: 19px;
+    position: relative;
+    top: 60px;
+    left: 0px;
+}
+.pricing-button button label{
+    cursor: pointer;
+}
+@media only screen and (max-width: 900px) {
+    #pricing-container{
+        padding-right: 0px;
+    }
+    .pricing-box-layout{
+        padding-bottom: 40px;
+    }
+    .pricing-button button{
+        bottom: 70px;
+    }
+}
+@media only screen and (max-width: 1500px) {
+    #pricing-container{
+        width: 100%;
+    }
+    .pricing-button button{
+        text-align: center;
+        font-size: 18px;
+        position: relative;
+        top: 80px;
+    }
+}
+@media only screen and (max-width: 600px) {
+    .pricing-box{
+        width: 85%;
+        height: 430px;
+        padding-right: 0px;
+    }
+    .pricing-feature{
+        font-size: 17px;
+        text-align: left;
+    }
+}

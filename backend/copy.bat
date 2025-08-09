@@ -1,0 +1,1 @@
+copy dev\generateScript\generateScript.pretty.js functions\generateScript\generateScript.js & copy dev\processTempId\processTempId.pretty.js functions\processTempId\processTempId.js & copy dev\processUserId\processUserId.pretty.js functions\processUserId\processUserId.js & copy dev\processPayment\processPayment.pretty.js functions\processPayment\processPayment.js & pause

@@ -1,0 +1,10 @@
+[functions]
+  directory = "backend/functions"
+[[headers]]
+  for = "/*"
+  [headers.value]
+    access-control-allow-origin = '*'
+    
+[build]
+  functions = "backend/functions"
+  #publish = "netlifyhost"
